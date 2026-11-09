@@ -54,9 +54,9 @@ export const projects: Project[] = [
     summary:
       'Torre residencial de 42 pavimentos em São Paulo, com varandas contínuas protegidas por brises de alumínio em tom bronze.',
     story: [
-      { title: 'Conceito', text: 'As lajes formam varandas contínuas ao redor da torre. Brises verticais de alumínio anodizado em tom bronze filtram o sol da tarde.' },
+      { title: 'Conceito', text: 'Varandas contínuas de 3 metros criam espaço para estar e receber ao ar livre. Brises verticais de alumínio em tom bronze filtram o sol da tarde.' },
       { title: 'Implantação', text: 'Os jardins ocupam 60% do terreno. Uma praça faz a transição entre a rua e o hall de entrada com pé-direito duplo.' },
-      { title: 'Interiores', text: 'Os apartamentos tipo têm plantas de 180 a 240 m². Pilares periféricos permitem diferentes arranjos dos ambientes internos.' },
+      { title: 'Interiores', text: 'Os apartamentos tipo têm plantas de 180 a 240 m², com três ou quatro suítes. A posição dos pilares nas bordas da planta permite diferentes arranjos dos ambientes internos.' },
     ],
     specs: [
       { label: 'Pavimentos', value: '42' },
