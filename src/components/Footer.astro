@@ -20,22 +20,22 @@ const year = new Date().getFullYear();
         <Logo />
         <p class="muted t-small">{site.identity.description}</p>
       </div>
-      <nav class="footer__col" aria-label="Rodapé">
-        <p class="label subtle">Navegação</p>
+      <nav class="footer__col" aria-label={content.ui.footer}>
+        <p class="label subtle">{content.ui.navigation}</p>
         <ul>
           {nav.map((n) => <li><a class="link-u" href={n.href}>{n.label}</a></li>)}
         </ul>
       </nav>
       <address class="footer__col">
-        <p class="label subtle">Contato</p>
+        <p class="label subtle">{content.ui.contact}</p>
         <a class="link-u" href={`mailto:${c.email}`}>{c.email}</a>
         <a class="link-u" href={c.phone.href}>{c.phone.display}</a>
         {wa && <a class="link-u" href={wa} target="_blank" rel="noopener noreferrer">{content.ui.whatsapp}</a>}
       </address>
       <div class="footer__col">
-        <p class="label subtle">Endereço</p>
+        <p class="label subtle">{content.ui.address}</p>
         <p>{c.address.street}<br />{c.address.district && <>{c.address.district}<br /></>}{c.address.city} · {c.address.region}</p>
-        {c.mapUrl && <a class="link-u label" href={c.mapUrl} target="_blank" rel="noopener noreferrer">Ver no mapa ↗</a>}
+        {c.mapUrl && <a class="link-u label" href={c.mapUrl} target="_blank" rel="noopener noreferrer">{content.ui.viewMap}</a>}
       </div>
     </div>
     <div class="footer__base label subtle">

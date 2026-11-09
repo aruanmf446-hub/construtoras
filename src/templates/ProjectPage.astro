@@ -30,8 +30,8 @@ const cover = firstAvailable(project.cover);
 const ogImg = cover ? (await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : undefined;
 const extra: SectionRef[] = pageSections('project');
 const crumbs = [
-  { name: 'Início', url: '/' },
-  ...(projectsHref ? [{ name: 'Projetos', url: projectsHref }] : []),
+  { name: ui.home, url: '/' },
+  ...(projectsHref ? [{ name: ui.projects, url: projectsHref }] : []),
   { name: project.name, url: Astro.url.pathname },
 ];
 const showGallery = project.gallery.length > 0 && sections.gallery.enabled;
@@ -42,8 +42,8 @@ const overrides = project.model ? { 'experience-3d': { modelUrl: project.model }
   page={null}
   extraSections={extra}
   customIndex={[
-    { label: 'Sobre o projeto', anchor: anchorOf('project-details') },
-    ...(showGallery ? [{ label: 'Galeria', anchor: anchorOf('gallery') }] : []),
+    { label: ui.aboutProject, anchor: anchorOf('project-details') },
+    ...(showGallery ? [{ label: ui.gallery, anchor: anchorOf('gallery') }] : []),
   ]}
   title={project.name}
   description={project.summary}
@@ -58,7 +58,7 @@ const overrides = project.model ? { 'experience-3d': { modelUrl: project.model }
       <div class="pj__scrim" aria-hidden="true"></div>
     </div>
     <div class="container pj__content">
-      <nav aria-label="Trilha" class="label pj__crumbs">
+      <nav aria-label={ui.breadcrumbs} class="label pj__crumbs">
         <ol>
           {crumbs.map((c, k) => (
             <li>{k < crumbs.length - 1 ? <a class="link-u" href={c.url}>{c.name}</a> : <span aria-current="page">{c.name}</span>}</li>
@@ -78,10 +78,10 @@ const overrides = project.model ? { 'experience-3d': { modelUrl: project.model }
     </div>
   </section>
 
-  <ProjectDetails variant="full" project={project} anchor={anchorOf('project-details')} navLabel="Sobre o projeto" />
+  <ProjectDetails variant="full" project={project} anchor={anchorOf('project-details')} navLabel={ui.aboutProject} />
 
   {project.video && (
-    <section class="pj__film" aria-label="Filme do projeto">
+    <section class="pj__film" aria-label={ui.projectFilm}>
       <video class="pj__video" muted loop playsinline preload="none" data-pj-video aria-hidden="true">
         <source src={project.video} type="video/mp4" />
       </video>
@@ -89,7 +89,7 @@ const overrides = project.model ? { 'experience-3d': { modelUrl: project.model }
   )}
 
   {showGallery && (
-    <Gallery anchor={anchorOf('gallery')} navLabel="Galeria" images={project.gallery} eyebrow="Galeria do projeto" title={['Detalhes &', '*atmosfera*']} />
+    <Gallery anchor={anchorOf('gallery')} navLabel={ui.gallery} images={project.gallery} eyebrow={ui.projectGallery} title={content.gallery.projectTitle} />
   )}
 
   <SectionRenderer list={extra} page={null} overrides={overrides} />

@@ -16,7 +16,7 @@ const c = content.certifications;
     <table class="ce__table">
       <caption class="sr-only">{c.eyebrow}</caption>
       <thead class="label subtle">
-        <tr><th scope="col">Ano</th><th scope="col">Reconhecimento</th><th scope="col">Entidade</th><th scope="col">Categoria</th></tr>
+        <tr><th scope="col">{content.ui.year}</th><th scope="col">{content.ui.recognition}</th><th scope="col">{content.ui.issuer}</th><th scope="col">{content.ui.category}</th></tr>
       </thead>
       <tbody>
         {c.items.map((it) => (

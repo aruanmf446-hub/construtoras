@@ -20,7 +20,7 @@ interface Props extends SectionProps {
 const { anchor, navLabel, index, variant = 'spotlight', slug, project: given } = Astro.props;
 const project = given ?? getProject(slug ?? content.projectSpotlight.slug) ?? projects[0];
 const href = project ? projectHref(project.slug) : null;
-const wa = project ? whatsappHref(`Olá! Tenho interesse no ${project.name}.`) : null;
+const wa = project ? whatsappHref(content.ui.projectInquiry.replace('{project}', project.name)) : null;
 const ui = content.ui;
 ---
 {project && variant === 'spotlight' && (
@@ -88,7 +88,7 @@ const ui = content.ui;
 
       {project.typologies && project.typologies.length > 0 && (
         <div class="pd__typo">
-          <p class="label muted">Tipologias</p>
+          <p class="label muted">{ui.typologies}</p>
           <ul>
             {project.typologies.map((t) => (
               <li data-reveal="fade"><span class="display t-lg">{t.area}</span><span>{t.name}</span><span class="muted">{t.detail}</span></li>
@@ -96,7 +96,7 @@ const ui = content.ui;
           </ul>
         </div>
       )}
-      {project.demo && <p class="demo-note label">Projeto demonstrativo · imagens geradas proceduralmente</p>}
+      {project.demo && <p class="demo-note label">{ui.projectDemo}</p>}
     </div>
   </section>
 )}

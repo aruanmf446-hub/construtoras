@@ -13,7 +13,7 @@ export const base: SiteContent = {
     eyebrow: 'Incorporação · Construção · Arquitetura',
     title: ['Arquitetura', 'que *permanece*'],
     subtitle:
-      'Edifícios pensados para atravessar gerações — com rigor construtivo, desenho autoral e a calma das coisas bem resolvidas.',
+      'Edifícios com desenho autoral, espaços bem dimensionados e materiais escolhidos para durar.',
     primary: { label: 'Ver empreendimentos', to: 'projects' },
     secondary: { label: 'Fale conosco', to: 'contact' },
     meta: [
@@ -27,17 +27,17 @@ export const base: SiteContent = {
   manifesto: {
     eyebrow: 'Manifesto',
     statement:
-      'Acreditamos que um edifício é uma promessa feita à cidade. Ele precisa ser preciso no detalhe, generoso no espaço e honesto nos materiais. Projetamos para a luz que entra às sete da manhã, para o silêncio de um corredor bem proporcionado e para o tempo, que é o único juiz da boa arquitetura.',
+      'Um edifício participa da cidade e da rotina de quem o utiliza. Por isso, articulamos implantação, luz natural e escolha de materiais desde os primeiros estudos. Cada decisão de projeto deve encontrar uma solução viável na construção.',
     signature: 'Diretoria de Arquitetura',
   },
 
   aboutIntro: {
     eyebrow: 'A empresa',
-    title: ['Precisão', 'como *linguagem*'],
-    lead: 'Somos uma construtora e incorporadora que trata cada obra como peça única: do estudo de massa ao último arremate de fachada.',
+    title: ['Projeto', 'e *execução*'],
+    lead: 'Reunimos incorporação e construção para desenvolver edifícios do estudo do terreno ao acabamento da fachada.',
     body: [
-      'Nossa equipe reúne arquitetos, engenheiros e especialistas em planejamento que trabalham em um único fluxo, do terreno à entrega das chaves.',
-      'Essa integração reduz incertezas, protege prazos e permite que o desenho arquitetônico chegue intacto ao canteiro.',
+      'Arquitetos, engenheiros e especialistas em planejamento coordenam as etapas do estudo inicial à entrega.',
+      'A coordenação entre equipes antecipa incompatibilidades e orienta a execução no canteiro.',
     ],
     image: { src: 'demo/detail-fins.jpg', alt: 'Detalhe de fachada com brises verticais em bronze (imagem demonstrativa)' },
     imageSecondary: { src: 'demo/detail-concrete.jpg', alt: 'Interior em concreto aparente com luz zenital (imagem demonstrativa)' },
@@ -59,8 +59,8 @@ export const base: SiteContent = {
 
   portfolio: {
     eyebrow: 'Portfólio',
-    title: ['Índice de', '*projetos*'],
-    intro: 'Filtre por categoria e explore cada empreendimento.',
+    title: ['Diferentes usos,', 'novas *soluções*'],
+    intro: 'Selecione uma categoria para consultar a implantação, os materiais e os dados de cada projeto.',
     allLabel: 'Todos',
   },
 
@@ -69,7 +69,7 @@ export const base: SiteContent = {
   services: {
     eyebrow: 'Especialidades',
     title: ['Do terreno', 'à *chave*'],
-    intro: 'Atuamos em todas as etapas do ciclo imobiliário, com equipes próprias e processos auditáveis.',
+    intro: 'Coordenamos viabilidade, projeto, execução e assistência técnica ao longo do ciclo imobiliário.',
     items: [
       {
         title: 'Incorporação',
@@ -108,22 +108,22 @@ export const base: SiteContent = {
     eyebrow: 'Em números',
     title: ['Escala com', '*consistência*'],
     items: [
-      { value: 27, label: 'Anos de atuação', detail: 'desde 1998' },
+      { value: 27, label: 'Anos de atuação', detail: '1998–2025' },
       { value: 1.8, decimals: 1, suffix: 'mi', label: 'm² construídos', detail: 'residencial e corporativo' },
       { value: 64, label: 'Empreendimentos entregues' },
       { value: 98, suffix: '%', label: 'Entregas no prazo', detail: 'últimos 10 anos' },
     ],
-    note: 'Indicadores ilustrativos — substitua pelos dados reais da empresa.',
+    note: 'Indicadores ilustrativos referentes a 2025 — substitua pelos dados reais da empresa.',
   },
 
   history: {
     eyebrow: 'Trajetória',
-    title: ['Três décadas', 'de *obra*'],
+    title: ['Desde', '*1998*'],
     chapters: [
       {
         kicker: '1998 — 2006',
         title: 'Fundação e primeiras obras',
-        text: 'A empresa nasce como um pequeno escritório de engenharia dedicado a residências unifamiliares, construindo reputação pela qualidade de execução.',
+        text: 'A empresa inicia suas atividades como escritório de engenharia dedicado a residências unifamiliares. Projeto e acompanhamento de campo formam a base da operação.',
         image: { src: 'demo/pavilion.jpg', alt: 'Residência com volume em balanço sobre espelho d’água (imagem demonstrativa)' },
       },
       {
@@ -133,9 +133,9 @@ export const base: SiteContent = {
         image: { src: 'demo/residence-louvers.jpg', alt: 'Edifício residencial com varandas e brises (imagem demonstrativa)' },
       },
       {
-        kicker: '2016 — hoje',
+        kicker: '2016 — 2025',
         title: 'Escala e tecnologia',
-        text: 'Com BIM, planejamento 4D e certificações ambientais, a empresa amplia sua atuação para torres e empreendimentos corporativos.',
+        text: 'A adoção de BIM e planejamento 4D acompanha a expansão para torres e edifícios corporativos. Modelos digitais passam a apoiar a coordenação das equipes.',
         image: { src: 'demo/hero-tower.jpg', alt: 'Torre residencial ao entardecer (imagem demonstrativa)' },
       },
     ],
@@ -156,8 +156,8 @@ export const base: SiteContent = {
 
   technology: {
     eyebrow: 'Tecnologia & inovação',
-    title: ['Engenharia', 'em *camadas*'],
-    intro: 'Cada edifício nasce primeiro como modelo digital. Antecipamos interferências, quantitativos e sequências de obra antes da primeira estaca.',
+    title: ['Planejar', 'para *executar*'],
+    intro: 'Modelos digitais permitem verificar interferências, estimar quantidades e definir sequências de execução antes da mobilização do canteiro.',
     image: { src: 'demo/detail-fins.jpg', alt: 'Detalhe de brises metálicos (imagem demonstrativa)' },
     items: [
       { code: 'BIM·LOD 400', title: 'Modelagem integrada', text: 'Arquitetura, estrutura e instalações compatibilizadas em um único modelo federado.' },
@@ -187,13 +187,13 @@ export const base: SiteContent = {
 
   differentiators: {
     eyebrow: 'Diferenciais construtivos',
-    title: ['O que não', 'se *negocia*'],
+    title: ['Decisões', 'de *projeto*'],
     items: [
       { title: 'Projeto integrado', text: 'Incorporação, arquitetura e engenharia sob a mesma coordenação, do estudo à entrega.' },
-      { title: 'Pé-direito generoso', text: 'Proporções acima do padrão de mercado para luz natural e sensação de amplitude.' },
-      { title: 'Materiais nobres', text: 'Especificação técnica rigorosa: pedras naturais, metais e madeira certificada.' },
-      { title: 'Plantas flexíveis', text: 'Estrutura que permite personalização sem comprometer a engenharia.' },
-      { title: 'Acústica', text: 'Lajes e esquadrias dimensionadas para conforto acústico real, medido em ensaio.' },
+      { title: 'Pé-direito', text: 'Alturas definidas conforme o uso dos ambientes e a entrada de luz natural.' },
+      { title: 'Materiais', text: 'Pedras, metais e madeira especificados conforme exposição, uso e manutenção.' },
+      { title: 'Plantas flexíveis', text: 'Posição de pilares e instalações estudada para permitir diferentes arranjos internos.' },
+      { title: 'Acústica', text: 'Lajes e esquadrias especificadas conforme os requisitos acústicos de cada ambiente.' },
       { title: 'Transparência', text: 'Relatórios de obra periódicos e acesso a visitas técnicas programadas.' },
     ],
   },
@@ -213,7 +213,7 @@ export const base: SiteContent = {
 
   partners: {
     eyebrow: 'Clientes & parceiros',
-    title: ['Em boa', '*companhia*'],
+    title: ['Relações', 'de *trabalho*'],
     items: [
       { name: 'Parceiro Um' },
       { name: 'Atelier Dois' },
@@ -224,19 +224,20 @@ export const base: SiteContent = {
       { name: 'Sete Materiais' },
       { name: 'Oito Fundações' },
     ],
-    note: 'Nomes fictícios. Substitua pelos logotipos de parceiros autorizados (SVG em /public/partners).',
+    note: 'Nomes fictícios, usados apenas para ilustrar a apresentação de clientes e parceiros.',
   },
 
   gallery: {
+    projectTitle: ['Detalhes', 'e *materiais*'],
     eyebrow: 'Galeria',
-    title: ['Luz, matéria', 'e *silêncio*'],
+    title: ['Espaços', 'e *materiais*'],
     images: [
       { src: 'demo/detail-concrete.jpg', alt: 'Hall em concreto aparente com escada e luz zenital (imagem demonstrativa)', caption: 'Hall · concreto aparente' },
-      { src: 'demo/pavilion.jpg', alt: 'Residência em balanço sobre espelho d’água ao pôr do sol (imagem demonstrativa)', caption: 'Casa Espelho' },
+      { src: 'demo/pavilion.jpg', alt: 'Residência em balanço sobre espelho d’água ao pôr do sol (imagem demonstrativa)', caption: 'Residência · concreto e vidro' },
       { src: 'demo/detail-fins.jpg', alt: 'Brises verticais em bronze sob luz rasante (imagem demonstrativa)', caption: 'Fachada · brises em bronze' },
-      { src: 'demo/detail-interior.jpg', alt: 'Living com forro de madeira e caixilhos pretos (imagem demonstrativa)', caption: 'Living · forro em madeira' },
-      { src: 'demo/night-tower.jpg', alt: 'Torre iluminada à noite (imagem demonstrativa)', caption: 'Torre Halden Norte' },
-      { src: 'demo/corporate.jpg', alt: 'Edifício corporativo com grelha de concreto (imagem demonstrativa)', caption: 'Sede Atlas' },
+      { src: 'demo/detail-interior.jpg', alt: 'Living com forro de madeira e caixilhos pretos (imagem demonstrativa)', caption: 'Sala · forro de madeira' },
+      { src: 'demo/night-tower.jpg', alt: 'Torre iluminada à noite (imagem demonstrativa)', caption: 'Fachada · vidro e metal' },
+      { src: 'demo/corporate.jpg', alt: 'Edifício corporativo com grelha de concreto (imagem demonstrativa)', caption: 'Edifício · grelha de concreto' },
     ],
   },
 
@@ -244,12 +245,14 @@ export const base: SiteContent = {
     eyebrow: 'Experiência 3D',
     title: ['Explore', 'a *torre*'],
     intro: 'Gire, aproxime e percorra os pavimentos da composição demonstrativa. Alterne entre dia e noite e revele as camadas construtivas.',
-    totalFloors: 32,
+    note: 'Arraste para girar · use a rolagem ou o gesto de pinça para aproximar · torre demonstrativa',
+    fallbackAlt: 'Torre residencial com brises verticais (imagem demonstrativa)',
+    totalFloors: 42,
     floors: [
       { from: 1, to: 2, label: 'Térreo & lazer', text: 'Lobby com pé-direito duplo, jardins e espaços de convivência.' },
-      { from: 3, to: 24, label: 'Pavimentos tipo', text: 'Apartamentos de 180 a 240 m² com varandas contínuas.' },
-      { from: 25, to: 30, label: 'Gardens', text: 'Unidades com terraços ajardinados e planta flexível.' },
-      { from: 31, to: 32, label: 'Coberturas', text: 'Duplex com piscina privativa e vista de 360°.' },
+      { from: 3, to: 34, label: 'Pavimentos tipo', text: 'Apartamentos de 180 a 240 m² com varandas contínuas.' },
+      { from: 35, to: 40, label: 'Gardens', text: 'Unidades com terraços ajardinados e planta flexível.' },
+      { from: 41, to: 42, label: 'Coberturas', text: 'Unidades duplex de 420 m² com piscina privativa.' },
     ],
     labels: {
       start: 'Iniciar experiência 3D',
@@ -265,7 +268,7 @@ export const base: SiteContent = {
 
   testimonials: {
     eyebrow: 'Depoimentos',
-    title: ['Relatos', 'de *quem vive*'],
+    title: ['Experiências', '*compartilhadas*'],
     items: [
       {
         quote: 'Espaço reservado para um depoimento real e autorizado de cliente. Use relatos verificáveis sobre a experiência de compra, obra ou entrega.',
@@ -278,7 +281,7 @@ export const base: SiteContent = {
         role: 'Cargo · Empresa cliente (exemplo)',
       },
       {
-        quote: 'Terceiro depoimento de exemplo. Este bloco aceita quantos relatos forem necessários e se adapta automaticamente.',
+        quote: 'Espaço para um depoimento autorizado de parceiro sobre a coordenação de projetos e o trabalho entre equipes.',
         author: 'Nome do parceiro',
         role: 'Escritório de arquitetura (exemplo)',
       },
@@ -289,21 +292,21 @@ export const base: SiteContent = {
   locations: {
     eyebrow: 'Presença',
     title: ['Onde', '*construímos*'],
-    intro: 'Escritórios e frentes de obra distribuídos pelas principais capitais do Sudeste e Sul.',
+    intro: 'Presença ilustrativa no Sudeste e no Sul. As entregas somam 64 empreendimentos até 2025; os demais registros indicam frentes em andamento.',
     items: [
-      { city: 'São Paulo', region: 'SP', lat: -23.55, lng: -46.63, kind: 'Sede', detail: '18 obras entregues' },
-      { city: 'Rio de Janeiro', region: 'RJ', lat: -22.91, lng: -43.17, kind: 'Escritório', detail: '9 obras entregues' },
-      { city: 'Belo Horizonte', region: 'MG', lat: -19.92, lng: -43.94, kind: 'Escritório', detail: '6 obras entregues' },
+      { city: 'São Paulo', region: 'SP', lat: -23.55, lng: -46.63, kind: 'Sede', detail: '36 entregas em SP, incluindo Campinas' },
+      { city: 'Rio de Janeiro', region: 'RJ', lat: -22.91, lng: -43.17, kind: 'Escritório', detail: '15 entregas no RJ' },
+      { city: 'Belo Horizonte', region: 'MG', lat: -19.92, lng: -43.94, kind: 'Escritório', detail: '12 entregas em MG, incluindo Nova Lima' },
       { city: 'Curitiba', region: 'PR', lat: -25.43, lng: -49.27, kind: 'Obra', detail: '2 obras em andamento' },
-      { city: 'Florianópolis', region: 'SC', lat: -27.6, lng: -48.55, kind: 'Obra', detail: '1 obra em andamento' },
-      { city: 'Porto Alegre', region: 'RS', lat: -30.03, lng: -51.23, kind: 'Obra', detail: 'Lançamento em breve' },
+      { city: 'Florianópolis', region: 'SC', lat: -27.6, lng: -48.55, kind: 'Obra', detail: '1 entrega e 1 obra em andamento' },
+      { city: 'Porto Alegre', region: 'RS', lat: -30.03, lng: -51.23, kind: 'Obra', detail: 'Polo Logístico Sul em andamento' },
     ],
   },
 
   contact: {
     eyebrow: 'Contato',
     title: ['Vamos', 'construir *juntos*'],
-    intro: 'Conte sobre seu terreno, projeto ou interesse em nossos empreendimentos. Nossa equipe responde em até um dia útil.',
+    intro: 'Informe o assunto, a localização e a etapa do projeto. Para consultar um empreendimento, inclua o nome na mensagem.',
     form: {
       enabled: true,
       channel: 'whatsapp',
@@ -315,7 +318,7 @@ export const base: SiteContent = {
         subject: 'Assunto',
         message: 'Mensagem',
         submit: 'Enviar mensagem',
-        sent: 'Abrimos seu aplicativo para concluir o envio.',
+        sent: 'Continue no WhatsApp ou no aplicativo de e-mail para enviar sua mensagem.',
       },
     },
   },
@@ -324,7 +327,7 @@ export const base: SiteContent = {
     projects: {
       eyebrow: 'Projetos',
       title: ['Obras &', '*empreendimentos*'],
-      intro: 'Residências, torres, sedes corporativas e infraestrutura — cada projeto com sua própria precisão.',
+      intro: 'Residências, edifícios corporativos e infraestrutura em diferentes cidades e escalas.',
       image: { src: 'demo/campus.jpg', alt: 'Vista aérea de um campus corporativo (imagem demonstrativa)' },
     },
     about: {
@@ -346,15 +349,54 @@ export const base: SiteContent = {
   },
 
   footer: {
-    statement: ['Arquitetura', 'que *permanece*'],
+    statement: ['Cada detalhe,', 'uma *decisão*'],
     demoNote: 'Template demonstrativo · empresa, dados e imagens fictícios gerados para apresentação.',
   },
 
   ui: {
+    mainNavigation: 'Principal',
+    pages: 'Páginas',
+    opensNewTab: 'abre em nova aba',
+    home: 'Início',
+    projects: 'Projetos',
+    breadcrumbs: 'Trilha de navegação',
+    aboutProject: 'Sobre o projeto',
+    projectGallery: 'Galeria do projeto',
+    gallery: 'Galeria',
+    projectFilm: 'Filme do projeto',
+    typologies: 'Tipologias',
+    projectDemo: 'Projeto demonstrativo · imagens geradas proceduralmente',
+    projectInquiry: 'Olá! Tenho interesse no projeto {project}.',
+    email: 'E-mail',
+    phone: 'Telefone',
+    address: 'Endereço',
+    contact: 'Contato',
+    chatNow: 'Conversar agora',
+    validationError: 'Revise os campos indicados antes de continuar.',
+    projectCount: 'projetos',
+    filterCategory: 'Filtrar por categoria',
+    number: 'Nº',
+    project: 'Projeto',
+    category: 'Categoria',
+    recognition: 'Reconhecimento',
+    issuer: 'Entidade',
+    previousTestimonial: 'Depoimento anterior',
+    nextTestimonial: 'Próximo depoimento',
+    carousel: 'carrossel',
+    enlargeImage: 'Ampliar imagem',
+    expandedGallery: 'Galeria ampliada',
+    previousImage: '← Anterior',
+    nextImage: 'Próxima →',
+    navigation: 'Navegação',
+    footer: 'Rodapé',
+    viewMap: 'Ver no mapa ↗',
+    experienceControls: 'Controles da experiência 3D',
+    views: 'Vistas',
+    lighting: 'Iluminação',
     menu: 'Menu',
     close: 'Fechar',
     skip: 'Pular para o conteúdo',
-    scroll: 'Role',
+    scroll: 'Role para explorar',
     viewProject: 'Ver projeto',
     allProjects: 'Todos os projetos',
     nextProject: 'Próximo projeto',

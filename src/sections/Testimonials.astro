@@ -11,7 +11,7 @@ const t = content.testimonials;
 const n = t.items.length;
 ---
 {n > 0 && (
-<section class="ts section section--alt" id={anchor} data-nav-label={navLabel} data-ts aria-roledescription="carrossel" aria-label={t.eyebrow}>
+<section class="ts section section--alt" id={anchor} data-nav-label={navLabel} data-ts aria-roledescription={content.ui.carousel} aria-label={t.eyebrow}>
   <div class="container">
     <SectionHeader index={index} eyebrow={t.eyebrow} title={t.title} size="lg" />
     <div class="ts__stage">
@@ -29,9 +29,9 @@ const n = t.items.length;
       </div>
       {n > 1 && (
         <div class="ts__nav">
-          <button type="button" class="label ts__btn" data-ts-prev aria-label="Depoimento anterior">←</button>
+          <button type="button" class="label ts__btn" data-ts-prev aria-label={content.ui.previousTestimonial}>←</button>
           <span class="label tabular" aria-live="polite"><span data-ts-index>01</span> / {String(n).padStart(2, '0')}</span>
-          <button type="button" class="label ts__btn" data-ts-next aria-label="Próximo depoimento">→</button>
+          <button type="button" class="label ts__btn" data-ts-next aria-label={content.ui.nextTestimonial}>→</button>
         </div>
       )}
     </div>

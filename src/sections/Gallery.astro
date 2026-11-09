@@ -33,7 +33,7 @@ const speeds = [0.08, 0.22, 0.14, 0.06, 0.2, 0.1];
     <ul class="ga__grid">
       {list.map((im, i) => (
         <li class:list={['ga__item', slots[i % slots.length]]} data-ga-depth={speeds[i % speeds.length]}>
-          <button type="button" class="ga__btn" data-ga-open={i} aria-label={`Ampliar imagem: ${im.caption ?? im.alt}`}>
+          <button type="button" class="ga__btn" data-ga-open={i} aria-label={`${content.ui.enlargeImage}: ${im.caption ?? im.alt}`}>
             <Media src={im.src} alt={im.alt} sizes="(min-width: 900px) 50vw, 100vw" reveal="mask" />
           </button>
           {im.caption && <p class="label subtle ga__cap"><span class="tabular">{pad(i + 1)}</span> {im.caption}</p>}
@@ -42,14 +42,14 @@ const speeds = [0.08, 0.22, 0.14, 0.06, 0.2, 0.1];
     </ul>
   </div>
 
-  <dialog class="lb" data-lb aria-label="Galeria ampliada">
+  <dialog class="lb" data-lb aria-label={content.ui.expandedGallery}>
     <figure class="lb__figure">
       <img data-lb-img alt="" />
       <figcaption class="label lb__cap"><span class="tabular" data-lb-count></span> <span data-lb-cap></span></figcaption>
     </figure>
     <div class="lb__controls">
-      <button type="button" class="label lb__btn" data-lb-prev>← Anterior</button>
-      <button type="button" class="label lb__btn" data-lb-next>Próxima →</button>
+      <button type="button" class="label lb__btn" data-lb-prev>{content.ui.previousImage}</button>
+      <button type="button" class="label lb__btn" data-lb-next>{content.ui.nextImage}</button>
       <button type="button" class="label lb__btn lb__close" data-lb-close>{content.ui.close} ✕</button>
     </div>
     <script type="application/json" data-lb-data set:html={JSON.stringify(list.map((im, i) => ({ src: large[i], alt: im.alt, caption: im.caption ?? '' })))} />
