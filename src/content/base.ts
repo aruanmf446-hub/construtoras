@@ -352,7 +352,7 @@ export const base: SiteContent = {
     statement: ['Vamos conversar', 'sobre sua *obra*'],
     description: 'Construtora com atuação em condomínios, edifícios comerciais, instalações industriais e infraestrutura. Planejamento, execução e assistência técnica.',
     legalName: 'Halden Construção e Incorporação (empresa fictícia)',
-    demoNote: 'Template personalizável · Halden é uma marca fictícia. Use o nome, o logotipo, os contatos e os dados da sua empresa.',
+    demoNote: 'Template demonstrativo · Halden, dados, projetos e imagens são ilustrativos. Personalize nome, marca, contatos e informações da sua empresa.',
   },
 
   ui: {

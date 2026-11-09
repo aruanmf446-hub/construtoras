@@ -4,38 +4,63 @@ export const institutional: ContentOverrides = {
   "hero": {
     "eyebrow": "Nome da sua construtora aqui",
     "title": [
-      "Seu projeto,",
-      "nossa *construção*"
+      "Da fundação",
+      "à *entrega*"
     ],
-    "subtitle": "Construção de edifícios residenciais, corporativos e institucionais, com orçamento, planejamento e acompanhamento técnico da execução.",
+    "subtitle": "Construção de condomínios residenciais, edifícios comerciais, instalações industriais e infraestrutura. Orçamento, planejamento e execução sob coordenação técnica.",
     "primary": {
+      "label": "Solicitar orçamento",
+      "to": "contact"
+    },
+    "secondary": {
       "label": "Conheça nossas obras",
       "to": "projects"
     },
-    "secondary": {
-      "label": "Converse sobre seu projeto",
-      "to": "contact"
-    }
+    "meta": [
+      {
+        "label": "Desde",
+        "value": "1998"
+      },
+      {
+        "label": "Equipe técnica",
+        "value": "180 profissionais"
+      },
+      {
+        "label": "Atuação",
+        "value": "Sudeste e Sul"
+      }
+    ],
+    "image": "demo/construction-site.webp",
+    "imageMobile": "demo/construction-site.webp",
+    "imageAlt": "Canteiro com edifícios em estrutura de concreto, grua e materiais organizados (imagem demonstrativa)"
   },
   "aboutIntro": {
-    "eyebrow": "Institucional",
+    "eyebrow": "A construtora",
     "title": [
-      "Quem assume",
-      "a *execução*"
+      "Planejamento",
+      "e *execução*"
     ],
     "body": [
       "Antes do início dos serviços, definimos orçamento, cronograma e logística conforme o escopo contratado.",
       "Durante a construção, relatórios de avanço e visitas técnicas permitem ao contratante acompanhar o que foi executado e as próximas etapas."
     ],
-    "lead": "Construir exige saber quem responde por cada etapa. A Halden reúne planejamento, engenharia e equipes de campo para conduzir a execução do seu projeto."
+    "lead": "A Halden executa construções residenciais, comerciais e industriais. Reunimos engenharia, gestão de fornecedores e equipes de campo para conduzir os serviços previstos em cada contrato.",
+    "image": {
+      "src": "demo/infrastructure.jpg",
+      "alt": "Viaduto de concreto com pilares duplos (imagem demonstrativa)"
+    },
+    "imageSecondary": {
+      "src": "demo/industrial.jpg",
+      "alt": "Complexo industrial com galpões e silos (imagem demonstrativa)"
+    }
   },
   "featuredProjects": {
-    "eyebrow": "Projetos selecionados",
+    "eyebrow": "Portfólio de construção",
     "title": [
       "Conheça o que",
       "*construímos*"
     ],
-    "intro": "Edifícios e infraestrutura com diferentes exigências de execução. Consulte o estágio, os dados técnicos e as soluções de cada projeto.",
+    "intro": "Condomínios, edifícios corporativos e infraestrutura em diferentes estágios. Consulte dimensões, sistemas construtivos e situação de cada empreendimento.",
     "slugs": [
       "sede-atlas",
       "campus-orion",
@@ -45,90 +70,93 @@ export const institutional: ContentOverrides = {
   },
   "services": {
     "title": [
-      "Da preparação",
-      "à *entrega*"
+      "O que",
+      "*construímos*"
     ],
-    "intro": "Planejamento, execução e assistência técnica para edifícios residenciais, corporativos e institucionais.",
+    "intro": "Da construção de condomínios à implantação de instalações industriais, cada contrato tem escopo, etapas e exigências de execução próprios.",
     "items": [
       {
-        "title": "Planejamento",
-        "description": "Orçamento, cronograma e logística de canteiro definidos conforme o projeto.",
+        "title": "Condomínios residenciais",
+        "description": "Execução de fundações, estruturas, instalações, áreas comuns e acabamentos para condomínios verticais.",
         "tags": [
-          "Custos",
-          "Prazos",
-          "Logística"
-        ],
-        "image": {
-          "src": "demo/campus.jpg",
-          "alt": "Vista aérea de conjunto de edifícios (imagem demonstrativa)"
-        }
-      },
-      {
-        "title": "Construção",
-        "description": "Coordenação de equipes e fornecedores em cada etapa da execução.",
-        "tags": [
-          "Estruturas",
-          "Instalações",
+          "Edifícios",
+          "Áreas comuns",
           "Acabamentos"
         ],
         "image": {
           "src": "demo/residence-louvers.jpg",
-          "alt": "Edifício residencial com brises de madeira (imagem demonstrativa)"
+          "alt": "Edifício de condomínio residencial com varandas e brises (imagem demonstrativa)"
         }
       },
       {
-        "title": "Engenharia",
-        "description": "Soluções de fundações e estruturas compatíveis com o terreno e o projeto.",
+        "title": "Edifícios comerciais e corporativos",
+        "description": "Construção de sedes, escritórios e conjuntos corporativos, com coordenação de estrutura, instalações e entrega dos ambientes.",
         "tags": [
-          "Estruturas",
-          "Fundações",
-          "BIM"
-        ],
-        "image": {
-          "src": "demo/infrastructure.jpg",
-          "alt": "Viaduto em concreto sob névoa (imagem demonstrativa)"
-        }
-      },
-      {
-        "title": "Coordenação técnica",
-        "description": "Compatibilização de arquitetura, estrutura e instalações antes da execução.",
-        "tags": [
-          "BIM",
-          "Projetos"
-        ],
-        "image": {
-          "src": "demo/detail-interior.jpg",
-          "alt": "Sala com fachada envidraçada e forro de madeira (imagem demonstrativa)"
-        }
-      },
-      {
-        "title": "Assistência técnica",
-        "description": "Orientação de uso, manutenção e atendimento após a entrega.",
-        "tags": [
-          "Manuais",
-          "Manutenção"
+          "Comercial",
+          "Corporativo",
+          "Instalações"
         ],
         "image": {
           "src": "demo/corporate.jpg",
-          "alt": "Sede corporativa com fachada em grelha de concreto (imagem demonstrativa)"
+          "alt": "Conjunto corporativo com fachada em grelha de concreto (imagem demonstrativa)"
+        }
+      },
+      {
+        "title": "Construção industrial e logística",
+        "description": "Galpões, silos e instalações industriais, com planejamento de acessos, montagem e liberação das etapas para operação.",
+        "tags": [
+          "Galpões",
+          "Silos",
+          "Montagem"
+        ],
+        "image": {
+          "src": "demo/industrial.jpg",
+          "alt": "Galpões logísticos e silos de complexo industrial (imagem demonstrativa)"
+        }
+      },
+      {
+        "title": "Infraestrutura e estruturas",
+        "description": "Execução de pontes, viadutos, fundações e estruturas de concreto, conforme as condições do terreno e de acesso ao canteiro.",
+        "tags": [
+          "Fundações",
+          "Pré-moldados",
+          "Estruturas"
+        ],
+        "image": {
+          "src": "demo/infrastructure.jpg",
+          "alt": "Viaduto em concreto com pilares duplos (imagem demonstrativa)"
+        }
+      },
+      {
+        "title": "Gestão, entrega e assistência",
+        "description": "Acompanhamento de custos e avanço dos serviços, documentação de entrega e atendimento de assistência técnica.",
+        "tags": [
+          "Gestão de obras",
+          "Entrega",
+          "Assistência"
+        ],
+        "image": {
+          "src": "demo/campus.jpg",
+          "alt": "Vista aérea de conjunto de edifícios corporativos (imagem demonstrativa)"
         }
       }
-    ]
+    ],
+    "eyebrow": "Áreas de atuação"
   },
   "contact": {
-    "intro": "Você já tem um terreno ou projeto definido? Conte o que pretende construir, onde e em que etapa está. Esses dados ajudam a iniciar a conversa sobre escopo e orçamento.",
+    "intro": "Informe o tipo de construção, a localização e a área estimada. Conte também se já possui terreno e projetos para que a equipe possa iniciar a análise do escopo.",
     "form": {
       "subjects": [
-        "Orçamento de construção",
-        "Coordenação de projetos",
-        "Assistência técnica",
-        "Imprensa",
-        "Outros assuntos"
+        "Construção de condomínios",
+        "Obras comerciais e corporativas",
+        "Obras industriais e infraestrutura",
+        "Fornecedores e parcerias",
+        "Assistência técnica"
       ]
     },
     "title": [
-      "O que você",
-      "quer *construir*?"
+      "Solicite um",
+      "*orçamento*"
     ]
   },
   "pages": {
@@ -158,11 +186,11 @@ export const institutional: ContentOverrides = {
     "chapters": [
       {
         "kicker": "1998 — 2006",
-        "title": "Primeiras construções",
-        "text": "A empresa inicia suas atividades na execução de residências unifamiliares. O acompanhamento de campo orienta a formação das primeiras equipes.",
+        "title": "Primeiros contratos",
+        "text": "A empresa inicia suas atividades na construção de edifícios residenciais. O acompanhamento técnico das etapas orienta a formação das primeiras equipes.",
         "image": {
-          "src": "demo/pavilion.jpg",
-          "alt": "Residência com volume em balanço sobre espelho d’água (imagem demonstrativa)"
+          "src": "demo/residence-louvers.jpg",
+          "alt": "Edifício residencial com varandas e brises de madeira (imagem demonstrativa)"
         }
       },
       {

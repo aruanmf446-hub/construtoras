@@ -19,7 +19,7 @@ export const site = {
    *  - 'engineering'   → Construtora e engenharia especializada (infraestrutura)
    * Changes section composition and narrative copy (see config/profiles.ts and content/profiles/*).
    */
-  profile: 'developer' as ProfileId,
+  profile: 'institutional' as ProfileId,
 
   /** Theme preset name from config/theme.config.ts */
   theme: 'graphite',
@@ -32,11 +32,11 @@ export const site = {
 
   identity: {
     name: 'Halden',
-    legalName: 'Halden Arquitetura & Construção (empresa fictícia)',
-    tagline: 'Arquitetura que permanece.',
+    legalName: 'Halden Construção e Incorporação (empresa fictícia)',
+    tagline: 'Da fundação à entrega.',
     description:
-      'Incorporadora e construtora dedicada a edifícios de alto padrão, onde precisão técnica e desenho arquitetônico caminham juntos.',
-    segment: 'Incorporação e construção de alto padrão',
+      'Construtora com atuação em condomínios residenciais, edifícios comerciais, instalações industriais e infraestrutura.',
+    segment: 'Construção civil e gestão de obras',
     foundingYear: 1998,
     /** Logos live in /public/brand. Set to `null` to fall back to a typographic wordmark. */
     logo: {
@@ -56,7 +56,7 @@ export const site = {
     whatsapp: {
       /** International format, digits only. */
       number: '5511900000000',
-      message: 'Olá! Gostaria de saber mais sobre os empreendimentos.',
+      message: 'Olá! Gostaria de conversar sobre o orçamento de uma construção.',
     },
     email: 'contato@exemplo.com.br',
     address: {
@@ -81,12 +81,12 @@ export const site = {
 
   seo: {
     titleTemplate: '%s — Halden',
-    defaultTitle: 'Halden — Arquitetura que permanece',
+    defaultTitle: 'Halden — Construtora e Gestão de Obras',
     description:
-      'Template demonstrativo de experiência digital para construtoras e incorporadoras: empreendimentos, obras e trajetória apresentados com linguagem cinematográfica.',
+      'Template personalizável para construtora: condomínios, edifícios comerciais, instalações industriais e infraestrutura. Empresa, dados e projetos ilustrativos.',
     /** Image path relative to src/assets/media. Rendered to 1200×630 at build time. */
-    ogImage: 'demo/hero-tower.jpg',
-    keywords: ['construtora', 'incorporadora', 'arquitetura', 'alto padrão', 'engenharia'],
+    ogImage: 'demo/construction-site.webp',
+    keywords: ['construtora', 'construção civil', 'condomínios', 'gestão de obras', 'engenharia'],
     /** schema.org type: 'GeneralContractor' | 'RealEstateAgent' | 'HomeAndConstructionBusiness' | 'Organization' */
     schemaType: 'GeneralContractor',
   },
