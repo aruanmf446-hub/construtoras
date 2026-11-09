@@ -31,7 +31,7 @@ const L = x.labels;
   </div>
 
   <div class="x3__stage" data-x3-stage data-state="idle">
-    <Media src={cfg.fallbackImage} alt="Composição arquitetônica demonstrativa — imagem estática" sizes="100vw" class="x3__fallback" />
+    <Media src={cfg.fallbackImage} alt={x.fallbackAlt} sizes="100vw" class="x3__fallback" />
     <div class="x3__canvas" data-x3-canvas></div>
 
     <div class="x3__status label" aria-live="polite">
@@ -44,13 +44,13 @@ const L = x.labels;
     </button>
 
     <div class="x3__ui" data-x3-ui>
-      <div class="x3__bar" role="toolbar" aria-label="Controles da experiência 3D">
-        <div class="x3__group" role="group" aria-label="Vistas">
+      <div class="x3__bar" role="toolbar" aria-label={content.ui.experienceControls}>
+        <div class="x3__group" role="group" aria-label={content.ui.views}>
           {(['facade', 'aerial', 'street'] as const).map((v, i) => (
             <button type="button" class="label x3__chip" data-x3-view={v} aria-pressed={i === 0 ? 'true' : 'false'}>{L.views[v]}</button>
           ))}
         </div>
-        <div class="x3__group" role="group" aria-label="Iluminação">
+        <div class="x3__group" role="group" aria-label={content.ui.lighting}>
           <button type="button" class="label x3__chip" data-x3-night aria-pressed="false">
             <span class="x3__dn"><span>{L.day}</span><span>{L.night}</span></span>
           </button>
@@ -75,7 +75,7 @@ const L = x.labels;
     </div>
   </div>
   <div class="container">
-    <p class="label subtle x3__note">Arraste para girar · role ou pince para aproximar · composição arquitetônica demonstrativa</p>
+    <p class="label subtle x3__note">{x.note}</p>
   </div>
   <script type="application/json" data-x3-floors-data set:html={JSON.stringify(x.floors)} />
 </section>

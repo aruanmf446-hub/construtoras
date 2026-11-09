@@ -20,10 +20,10 @@ const c = content.contact;
 const s = site.contact;
 const wa = whatsappHref();
 const channels = [
-  { label: 'E-mail', value: s.email, href: `mailto:${s.email}` },
-  { label: 'Telefone', value: s.phone.display, href: s.phone.href },
-  wa ? { label: content.ui.whatsapp, value: 'Conversar agora', href: wa, external: true } : null,
-  { label: 'Endereço', value: `${s.address.street} · ${s.address.city}`, href: s.mapUrl, external: true },
+  { label: content.ui.email, value: s.email, href: `mailto:${s.email}` },
+  { label: content.ui.phone, value: s.phone.display, href: s.phone.href },
+  wa ? { label: content.ui.whatsapp, value: content.ui.chatNow, href: wa, external: true } : null,
+  { label: content.ui.address, value: `${s.address.street} · ${s.address.city}`, href: s.mapUrl, external: true },
 ].filter(Boolean) as { label: string; value: string; href?: string; external?: boolean }[];
 const channel = c.form.channel === 'whatsapp' && wa ? 'whatsapp' : 'email';
 ---
@@ -86,7 +86,7 @@ const channel = c.form.channel === 'whatsapp' && wa ? 'whatsapp' : 'email';
           <button type="submit" class="btn btn--solid ct__submit">
             <span>{c.form.labels.submit}</span><Arrow />
           </button>
-          <p class="label ct__status" role="status" data-ct-status data-sent={c.form.labels.sent}></p>
+          <p class="label ct__status" role="status" data-ct-status data-sent={c.form.labels.sent} data-invalid={content.ui.validationError}></p>
         </form>
       )}
     </div>
@@ -247,7 +247,7 @@ const channel = c.form.channel === 'whatsapp' && wa ? 'whatsapp' : 'email';
       });
       if (firstInvalid) {
         (firstInvalid as HTMLElement).focus();
-        status.textContent = 'Verifique os campos destacados.';
+        status.textContent = status.dataset.invalid || '';
         return;
       }
       const d = new FormData(form);

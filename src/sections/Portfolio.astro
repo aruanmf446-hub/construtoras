@@ -30,7 +30,7 @@ const rhythm = ['m-a', 'm-b', 'm-c', 'm-d', 'm-e'];
     {!bare && <SectionHeader index={index} eyebrow={p.eyebrow} title={p.title} intro={p.intro} />}
 
     {cats.length > 1 && (
-      <div class="pf__filters" role="group" aria-label="Filtrar por categoria" data-reveal="fade">
+      <div class="pf__filters" role="group" aria-label={content.ui.filterCategory} data-reveal="fade">
         <button type="button" class="pf__filter label" aria-pressed="true" data-filter="*">
           {p.allLabel} <sup class="tabular">{pad(projects.length)}</sup>
         </button>
@@ -41,7 +41,7 @@ const rhythm = ['m-a', 'm-b', 'm-c', 'm-d', 'm-e'];
         ))}
       </div>
     )}
-    <p class="sr-only" aria-live="polite" data-pf-status></p>
+    <p class="sr-only" aria-live="polite" data-pf-status data-count-label={content.ui.projectCount}></p>
 
     {variant === 'mosaic' ? (
       <ul class="pf__mosaic">
@@ -67,7 +67,7 @@ const rhythm = ['m-a', 'm-b', 'm-c', 'm-d', 'm-e'];
     ) : (
       <div class="pf__index">
         <div class="pf__head label subtle" aria-hidden="true">
-          <span>Nº</span><span>Projeto</span><span>Categoria</span><span>{content.ui.location}</span><span>{content.ui.year}</span><span>{content.ui.status}</span>
+          <span>{content.ui.number}</span><span>{content.ui.project}</span><span>{content.ui.category}</span><span>{content.ui.location}</span><span>{content.ui.year}</span><span>{content.ui.status}</span>
         </div>
         <ul>
           {projects.map((x, i) => {
@@ -317,7 +317,7 @@ const rhythm = ['m-a', 'm-b', 'm-c', 'm-d', 'm-e'];
             if (it.dataset.reveal) { it.style.opacity = '1'; it.style.transform = 'none'; }
           }
         });
-        if (status) status.textContent = `${n} projetos`;
+        if (status) status.textContent = `${n} ${status.dataset.countLabel}`;
         ScrollTrigger.refresh();
       })
     );
