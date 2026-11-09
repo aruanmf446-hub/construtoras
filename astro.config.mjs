@@ -3,8 +3,12 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { site } from './src/config/site.config.ts';
 
+const deploymentUrl = new URL(site.url);
+const deploymentBase = deploymentUrl.pathname.replace(/\/$/, '');
+
 export default defineConfig({
-  site: site.url,
+  site: deploymentUrl.origin,
+  base: deploymentBase || '/',
   output: 'static',
   trailingSlash: 'ignore',
   build: { format: 'directory', inlineStylesheets: 'always' },
