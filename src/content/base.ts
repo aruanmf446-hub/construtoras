@@ -10,7 +10,7 @@ import type { SiteContent } from './schema';
 
 export const base: SiteContent = {
   hero: {
-    eyebrow: 'Incorporação · Construção · Arquitetura',
+    eyebrow: 'Nome da sua incorporadora aqui',
     title: ['Arquitetura', 'que *permanece*'],
     subtitle:
       'Residências com varandas amplas, luz natural e plantas que permitem diferentes formas de morar.',
@@ -28,7 +28,7 @@ export const base: SiteContent = {
     eyebrow: 'Manifesto',
     statement:
       'Escolher onde morar é pensar em como você quer passar os seus dias. Na luz da sala, no espaço para receber e na privacidade dos quartos. Nossos projetos começam nessas escolhas e tomam forma na planta, nos materiais e na relação com a rua.',
-    signature: 'Diretoria de Arquitetura',
+    signature: 'Nome do responsável aqui · Arquitetura',
   },
 
   aboutIntro: {
@@ -215,8 +215,8 @@ export const base: SiteContent = {
     eyebrow: 'Clientes & parceiros',
     title: ['Construir exige', '*colaboração*'],
     items: [
-      { name: 'Parceiro Um' },
-      { name: 'Atelier Dois' },
+      { name: 'Nome do parceiro aqui' },
+      { name: 'Nome do escritório aqui' },
       { name: 'Grupo Três' },
       { name: 'Quatro Engenharia' },
       { name: 'Cinco Capital' },
@@ -272,21 +272,21 @@ export const base: SiteContent = {
     items: [
       {
         quote: 'Depoimento ilustrativo. Em uma compra, informações claras sobre a planta, o andamento da construção e a entrega ajudam o cliente a avaliar sua escolha.',
-        author: 'Nome do cliente',
-        role: 'Proprietário · Empreendimento (exemplo)',
+        author: 'Nome do cliente aqui',
+        role: 'Cliente · Nome do empreendimento aqui',
       },
       {
         quote: 'Depoimento ilustrativo. Para uma empresa contratante, a avaliação envolve orçamento, etapas de execução e condições para iniciar a operação.',
-        author: 'Nome do executivo',
-        role: 'Cargo · Empresa cliente (exemplo)',
+        author: 'Nome do responsável aqui',
+        role: 'Cargo · Nome da empresa aqui',
       },
       {
         quote: 'Depoimento ilustrativo. Na parceria de projeto, a avaliação envolve decisões bem documentadas e coordenação entre arquitetura e engenharia.',
-        author: 'Nome do parceiro',
-        role: 'Escritório de arquitetura (exemplo)',
+        author: 'Nome do parceiro aqui',
+        role: 'Nome do escritório aqui',
       },
     ],
-    note: 'Depoimentos de exemplo — substitua por relatos reais e autorizados.',
+    note: 'Conteúdo ilustrativo · personalize os nomes e inclua apenas depoimentos reais e autorizados.',
   },
 
   locations: {
@@ -350,7 +350,7 @@ export const base: SiteContent = {
 
   footer: {
     statement: ['Conheça seu', 'próximo *endereço*'],
-    demoNote: 'Template demonstrativo · empresa, dados e imagens fictícios gerados para apresentação.',
+    demoNote: 'Template personalizável · Halden é uma marca fictícia. Use o nome, o logotipo, os contatos e os dados da sua empresa.',
   },
 
   ui: {

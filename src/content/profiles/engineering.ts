@@ -2,7 +2,7 @@ import type { ContentOverrides } from '../index';
 
 export const engineering: ContentOverrides = {
   "hero": {
-    "eyebrow": "Engenharia · Infraestrutura · Industrial",
+    "eyebrow": "Nome da sua empresa de engenharia aqui",
     "title": [
       "Engenharia para",
       "sua *operação*"
@@ -294,7 +294,7 @@ export const engineering: ContentOverrides = {
   },
   "manifesto": {
     "statement": "Uma estrutura precisa atender às cargas previstas e às condições de quem vai operá-la. A execução começa por entender essas exigências: solo, acessos, montagem e interferências. É a partir delas que organizamos as frentes de serviço e as etapas de entrega.",
-    "signature": "Diretoria de Engenharia"
+    "signature": "Nome do responsável aqui · Engenharia"
   },
   "portfolio": {
     "title": [

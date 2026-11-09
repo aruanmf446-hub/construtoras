@@ -2,7 +2,7 @@ import type { ContentOverrides } from '../index';
 
 export const institutional: ContentOverrides = {
   "hero": {
-    "eyebrow": "Construtora · Desde 1998",
+    "eyebrow": "Nome da sua construtora aqui",
     "title": [
       "Seu projeto,",
       "nossa *construção*"
@@ -253,7 +253,7 @@ export const institutional: ContentOverrides = {
   },
   "manifesto": {
     "statement": "Um projeto precisa chegar à execução com escopo, custos e responsabilidades definidos. Nosso trabalho é coordenar essas informações e manter o contratante a par das decisões, do primeiro serviço à entrega.",
-    "signature": "Diretoria de Construção"
+    "signature": "Nome do responsável aqui · Construção"
   },
   "portfolio": {
     "title": [
