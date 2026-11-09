@@ -1,0 +1,92 @@
+---
+/** (15) Clients & partners — slow typographic marquee (static grid with reduced motion). */
+import SectionHeader from '../components/SectionHeader.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const p = content.partners;
+const row = (hidden = false) => (
+  p.items.map((it) => ({ ...it, hidden }))
+);
+---
+{p.items.length > 0 && (
+<section class="pt section section--tight" id={anchor} data-nav-label={navLabel} aria-label={p.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={p.eyebrow} title={p.title} size="lg" />
+  </div>
+  <div class="pt__marquee">
+    <ul class="pt__track">
+      {[...row(), ...row(true)].map((it) => (
+        <li class="pt__item" aria-hidden={it.hidden ? 'true' : undefined}>
+          {it.logo ? <img src={it.logo} alt={it.hidden ? '' : it.name} loading="lazy" height="48" /> : <span class="display">{it.name}</span>}
+          <span class="pt__sep" aria-hidden="true">+</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+  {site.demo && p.note && <div class="container"><p class="demo-note label">{p.note}</p></div>}
+</section>
+)}
+
+<style>
+  .pt__marquee {
+    overflow: hidden;
+    border-block: var(--shape-border) solid var(--color-line);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .pt__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+  .pt__marquee:hover .pt__track {
+    animation-play-state: paused;
+  }
+  .pt__item {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: 2.2rem clamp(1rem, 2vw, 2rem);
+    white-space: nowrap;
+    color: var(--color-ink-muted);
+    transition: color 0.4s;
+  }
+  .pt__item:hover {
+    color: var(--color-ink);
+  }
+  .pt__item .display {
+    font-size: clamp(2rem, 4.4vw, 4.2rem);
+  }
+  .pt__item img {
+    width: auto;
+    max-height: 3rem;
+    opacity: 0.75;
+  }
+  .pt__sep {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pt__marquee {
+      mask-image: none;
+    }
+    .pt__track {
+      animation: none;
+      width: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-inline: var(--layout-margin);
+    }
+    .pt__item[aria-hidden='true'] {
+      display: none;
+    }
+  }
+</style>

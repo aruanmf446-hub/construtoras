@@ -1,0 +1,127 @@
+---
+/** (09) History & trajectory — chapters scroll beside a sticky image that wipes between eras. */
+import Media from '../components/Media.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { content } from '../content';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const h = content.history;
+---
+{h.chapters.length > 0 && (
+<section class="hs section" id={anchor} data-nav-label={navLabel} data-hs aria-label={h.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={h.eyebrow} title={h.title} size="xxl" />
+    <div class="hs__grid">
+      <div class="hs__stage" aria-hidden="true">
+        {h.chapters.map((c, i) => (
+          <div class:list={['hs__frame', i === 0 && 'is-active']} data-hs-frame={i}>
+            <Media src={c.image.src} alt="" sizes="(min-width: 900px) 45vw, 0px" />
+          </div>
+        ))}
+        <span class="hs__counter display" data-hs-counter>{h.chapters[0].kicker}</span>
+      </div>
+      <ol class="hs__chapters">
+        {h.chapters.map((c, i) => (
+          <li class="hs__chapter" data-hs-chapter={i}>
+            <div class="hs__inline"><Media src={c.image.src} alt={c.image.alt} sizes="100vw" reveal="mask" /></div>
+            <p class="label hs__kicker">{c.kicker}</p>
+            <h3 class="display t-lg" data-reveal="fade">{c.title}</h3>
+            <p class="prose" data-reveal="fade">{c.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+)}
+
+<style>
+  .hs__grid {
+    display: grid;
+    gap: var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .hs__stage {
+    display: none;
+  }
+  .hs__chapters {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 5rem;
+  }
+  .hs__chapter {
+    display: grid;
+    gap: 1.25rem;
+    align-content: center;
+  }
+  .hs__inline :global(.media) {
+    aspect-ratio: 4 / 3;
+  }
+  .hs__kicker {
+    color: var(--color-accent);
+  }
+  @media (min-width: 900px) {
+    .hs__stage {
+      display: block;
+      grid-column: 1 / span 6;
+      position: sticky;
+      top: 12vh;
+      height: 76vh;
+      align-self: start;
+      overflow: hidden;
+    }
+    .hs__frame {
+      position: absolute;
+      inset: 0;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1.2s var(--motion-ease);
+    }
+    .hs__frame.is-active {
+      clip-path: inset(0 0 0 0);
+      z-index: 1;
+    }
+    .hs__frame :global(.media) {
+      height: 100%;
+    }
+    .hs__counter {
+      position: absolute;
+      z-index: 2;
+      left: 1.25rem;
+      bottom: 1rem;
+      font-size: clamp(2rem, 4vw, 4rem);
+      color: #f3eee6;
+      mix-blend-mode: difference;
+    }
+    .hs__chapters {
+      grid-column: 8 / -1;
+      gap: 0;
+    }
+    .hs__chapter {
+      min-height: 76vh;
+    }
+    .hs__inline {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hs]').forEach((root) => {
+    const frames = root.querySelectorAll<HTMLElement>('[data-hs-frame]');
+    const counter = root.querySelector<HTMLElement>('[data-hs-counter]');
+    const chapters = root.querySelectorAll<HTMLElement>('[data-hs-chapter]');
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const i = Number((e.target as HTMLElement).dataset.hsChapter);
+          frames.forEach((f) => f.classList.toggle('is-active', Number(f.dataset.hsFrame) === i));
+          if (counter) counter.textContent = e.target.querySelector('.hs__kicker')?.textContent ?? '';
+        }),
+      { rootMargin: '-45% 0px -45% 0px' }
+    );
+    chapters.forEach((c) => io.observe(c));
+  });
+</script>

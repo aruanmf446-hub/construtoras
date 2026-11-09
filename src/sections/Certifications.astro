@@ -1,0 +1,90 @@
+---
+/** (14) Awards & certifications — ledger table. Demo items are explicit placeholders. */
+import SectionHeader from '../components/SectionHeader.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const c = content.certifications;
+---
+{c.items.length > 0 && (
+<section class="ce section" id={anchor} data-nav-label={navLabel} aria-label={c.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={c.eyebrow} title={c.title} intro={c.intro} size="lg" />
+    <table class="ce__table">
+      <caption class="sr-only">{c.eyebrow}</caption>
+      <thead class="label subtle">
+        <tr><th scope="col">Ano</th><th scope="col">Reconhecimento</th><th scope="col">Entidade</th><th scope="col">Categoria</th></tr>
+      </thead>
+      <tbody>
+        {c.items.map((it) => (
+          <tr data-reveal="fade">
+            <td class="label tabular ce__year">{it.year}</td>
+            <th scope="row" class="t-md ce__name">{it.name}</th>
+            <td class="muted">{it.issuer}</td>
+            <td class="label muted">{it.category}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    {site.demo && c.note && <p class="demo-note label">{c.note}</p>}
+  </div>
+</section>
+)}
+
+<style>
+  .ce__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  .ce__table thead {
+    display: none;
+  }
+  .ce__table tr {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 0.25rem 1rem;
+    padding: 1.4rem 0;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .ce__table tbody tr:last-child {
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .ce__table td:nth-child(3),
+  .ce__table td:nth-child(4) {
+    grid-column: 2;
+  }
+  .ce__name {
+    font-weight: 400;
+  }
+  .ce__year {
+    color: var(--color-accent);
+    grid-row: span 3;
+  }
+  @media (min-width: 900px) {
+    .ce__table thead {
+      display: table-header-group;
+    }
+    .ce__table tr {
+      display: table-row;
+    }
+    .ce__table th,
+    .ce__table td {
+      padding: 1.6rem 1rem 1.6rem 0;
+      border-top: var(--shape-border) solid var(--color-line);
+      vertical-align: baseline;
+    }
+    .ce__table thead th {
+      padding-block: 0.75rem;
+      font-weight: 400;
+      border-top: 0;
+    }
+    .ce__table tbody tr:last-child th,
+    .ce__table tbody tr:last-child td {
+      border-bottom: var(--shape-border) solid var(--color-line);
+    }
+  }
+</style>

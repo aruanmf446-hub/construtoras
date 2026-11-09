@@ -1,0 +1,86 @@
+---
+/** (02) Manifesto — monumental statement, words light up as you read (scroll-scrubbed). */
+import { content } from '../content';
+import { pad } from '../lib/text';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const m = content.manifesto;
+const words = m.statement.split(/\s+/);
+---
+<section class="manifesto section" id={anchor} data-nav-label={navLabel} aria-label={m.eyebrow}>
+  <div class="container manifesto__grid">
+    <div class="manifesto__meta label muted">
+      {index !== undefined && <span class="tabular">({pad(index)})</span>}
+      <span>{m.eyebrow}</span>
+    </div>
+    <p class="manifesto__text" data-scrub-words>
+      {words.map((w, i) => <><span class="w">{w}</span>{i < words.length - 1 ? ' ' : ''}</>)}
+    </p>
+    <div class="manifesto__sign">
+      <hr class="rule" data-reveal="draw" />
+      <p class="label muted" data-reveal="fade">— {m.signature}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifesto__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2.5rem var(--layout-gutter);
+  }
+  .manifesto__meta {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 1rem;
+  }
+  .manifesto__text {
+    grid-column: 1 / -1;
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 4.4vw, 4.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: pretty;
+    text-indent: 18%;
+  }
+  .manifesto__sign {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 900px) {
+    .manifesto__meta {
+      grid-column: 1 / span 2;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .manifesto__text {
+      grid-column: 3 / -1;
+      text-indent: 0;
+    }
+    .manifesto__sign {
+      grid-column: 9 / -1;
+    }
+  }
+  :global(html.motion-ok) .manifesto__text .w {
+    opacity: 0.2;
+  }
+  :global(html.motion-failsafe) .manifesto__text .w {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import { gsap, motionOk } from '../scripts/motion/core';
+  document.querySelectorAll<HTMLElement>('[data-scrub-words]').forEach((el) => {
+    if (!motionOk()) return;
+    gsap.to(el.querySelectorAll('.w'), {
+      opacity: 1,
+      ease: 'none',
+      stagger: 0.05,
+      scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: 0.6 },
+    });
+  });
+</script>

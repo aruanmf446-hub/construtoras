@@ -1,0 +1,8 @@
+---
+/** Brise-soleil slats overlay — animated by the motion engine. */
+interface Props { count?: number; color?: string }
+const { count = 6, color } = Astro.props;
+---
+<div class="slats" aria-hidden="true" data-slats style={color ? `--slat-color:${color}` : undefined}>
+  {Array.from({ length: count }, () => <span />)}
+</div>

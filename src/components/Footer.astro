@@ -1,0 +1,109 @@
+---
+import Logo from './Logo.astro';
+import Headline from './Headline.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import { mainNav, whatsappHref } from '../lib/routes';
+
+const c = site.contact;
+const nav = mainNav();
+const wa = whatsappHref();
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <Headline lines={content.footer.statement} size="xxl" as="p" />
+    </div>
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <Logo />
+        <p class="muted t-small">{site.identity.description}</p>
+      </div>
+      <nav class="footer__col" aria-label="Rodapé">
+        <p class="label subtle">Navegação</p>
+        <ul>
+          {nav.map((n) => <li><a class="link-u" href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <address class="footer__col">
+        <p class="label subtle">Contato</p>
+        <a class="link-u" href={`mailto:${c.email}`}>{c.email}</a>
+        <a class="link-u" href={c.phone.href}>{c.phone.display}</a>
+        {wa && <a class="link-u" href={wa} target="_blank" rel="noopener noreferrer">{content.ui.whatsapp}</a>}
+      </address>
+      <div class="footer__col">
+        <p class="label subtle">Endereço</p>
+        <p>{c.address.street}<br />{c.address.district && <>{c.address.district}<br /></>}{c.address.city} · {c.address.region}</p>
+        {c.mapUrl && <a class="link-u label" href={c.mapUrl} target="_blank" rel="noopener noreferrer">Ver no mapa ↗</a>}
+      </div>
+    </div>
+    <div class="footer__base label subtle">
+      <span>© {year} {site.identity.legalName}</span>
+      {site.demo && <span>{content.footer.demoNote}</span>}
+      <ul class="footer__social">
+        {site.social.map((s) => <li><a class="link-u" href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding: clamp(5rem, 10vw, 9rem) 0 clamp(6.5rem, 6vw, 3rem);
+    border-top: var(--shape-border) solid var(--color-line);
+    background: var(--color-bg);
+  }
+  .footer__top {
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+  }
+  .footer__grid {
+    display: grid;
+    gap: 2.5rem var(--layout-gutter);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-block: 2.5rem;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .footer__brand {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+    max-width: 30ch;
+  }
+  .footer__col {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    justify-items: start;
+    font-style: normal;
+  }
+  .footer__col .label {
+    margin-bottom: 0.6rem;
+  }
+  .footer__col ul {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .footer__social {
+    display: flex;
+    gap: 1.5rem;
+  }
+  @media (min-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 4fr 2fr 3fr 3fr;
+    }
+    .footer__brand {
+      grid-column: auto;
+    }
+  }
+</style>

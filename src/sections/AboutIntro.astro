@@ -1,0 +1,116 @@
+---
+/** (03) Company presentation — asymmetric editorial composition with two overlapping images. */
+import Media from '../components/Media.astro';
+import Headline from '../components/Headline.astro';
+import Button from '../components/Button.astro';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import { resolveCta } from '../lib/routes';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index, page } = Astro.props;
+const a = content.aboutIntro;
+const cta = a.cta ? resolveCta(a.cta.to, page ?? undefined) : null;
+// Avoid a self-link on the about page.
+const showCta = cta && page !== 'about';
+---
+<section class="about section" id={anchor} data-nav-label={navLabel} aria-labelledby={`${anchor}-t`}>
+  <div class="container about__grid">
+    <div class="about__meta label muted">
+      {index !== undefined && <span class="tabular">({pad(index)})</span>}
+      <span>{a.eyebrow}</span>
+    </div>
+    <Headline lines={a.title} size="xxl" class="about__title" id={`${anchor}-t`} />
+
+    <div class="about__visual">
+      <Media src={a.image.src} alt={a.image.alt} sizes="(min-width: 900px) 40vw, 90vw" class="about__img" parallax={0.14} slats={5} />
+      {a.imageSecondary && (
+        <Media src={a.imageSecondary.src} alt={a.imageSecondary.alt} sizes="(min-width: 900px) 22vw, 50vw" class="about__img2" reveal="mask" />
+      )}
+      <span class="label about__caption subtle">Fig. 01 — {a.image.alt.replace(/\s*\(.*\)$/, '')}</span>
+    </div>
+
+    <div class="about__text">
+      <p class="lead" data-reveal="fade">{a.lead}</p>
+      <div class="prose" data-reveal="fade">{a.body.map((p) => <p>{p}</p>)}</div>
+      <dl class="about__facts">
+        {a.facts.map((f) => (
+          <div data-reveal="fade"><dt class="label subtle">{f.label}</dt><dd class="t-md">{f.value}</dd></div>
+        ))}
+      </dl>
+      {showCta && a.cta && <div data-reveal="fade"><Button href={cta} label={a.cta.label} /></div>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 3rem var(--layout-gutter);
+  }
+  .about__meta {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 1rem;
+  }
+  .about__grid :global(.about__title) {
+    grid-column: 1 / -1;
+  }
+  .about__visual {
+    grid-column: 1 / -1;
+    position: relative;
+    padding-bottom: 18%;
+  }
+  .about__visual :global(.about__img) {
+    aspect-ratio: 4 / 5;
+    width: 82%;
+  }
+  .about__visual :global(.about__img2) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 46%;
+    aspect-ratio: 3 / 4;
+    z-index: 3;
+    outline: 10px solid var(--color-bg);
+  }
+  .about__caption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    max-width: 40%;
+  }
+  .about__text {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .about__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--layout-gutter);
+    padding-top: 1.5rem;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .about__facts dd {
+    margin-top: 0.4rem;
+  }
+  @media (min-width: 900px) {
+    .about__meta {
+      grid-column: 1 / span 3;
+    }
+    .about__grid :global(.about__title) {
+      grid-column: 4 / -1;
+    }
+    .about__visual {
+      grid-column: 1 / span 6;
+    }
+    .about__text {
+      grid-column: 8 / span 5;
+      padding-top: 12vw;
+    }
+  }
+</style>

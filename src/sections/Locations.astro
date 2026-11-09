@@ -1,0 +1,185 @@
+---
+/** (19) Geographic presence — abstract survey map projected from coordinates (no external map service). */
+import SectionHeader from '../components/SectionHeader.astro';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const l = content.locations;
+const items = l.items;
+// Fit an equirectangular projection to the points with padding.
+const lats = items.map((i) => i.lat);
+const lngs = items.map((i) => i.lng);
+const pad2 = 3;
+const minLat = Math.min(...lats) - pad2, maxLat = Math.max(...lats) + pad2;
+const minLng = Math.min(...lngs) - pad2 * 1.4, maxLng = Math.max(...lngs) + pad2 * 1.4;
+const VW = 1000;
+const VH = Math.round((VW * (maxLat - minLat)) / (maxLng - minLng)) || 600;
+const pt = (lat: number, lng: number) => ({
+  x: ((lng - minLng) / (maxLng - minLng)) * VW,
+  y: ((maxLat - lat) / (maxLat - minLat)) * VH,
+});
+const fmt = (v: number, pos: string, neg: string) => `${Math.abs(v).toFixed(2)}°${v >= 0 ? pos : neg}`;
+---
+{items.length > 0 && (
+<section class="lc section" id={anchor} data-nav-label={navLabel} data-lc aria-label={l.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={l.eyebrow} title={l.title} intro={l.intro} />
+    <div class="lc__grid">
+      <figure class="lc__map" data-reveal="fade">
+        <svg viewBox={`0 0 ${VW} ${VH}`} role="img" aria-label={`Mapa esquemático: ${items.map((i) => i.city).join(', ')}`}>
+          <defs>
+            <pattern id={`${anchor}-dots`} width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" class="lc__dot" />
+            </pattern>
+          </defs>
+          <rect width={VW} height={VH} fill={`url(#${anchor}-dots)`} />
+          {[0.25, 0.5, 0.75].map((f) => <line x1="0" x2={VW} y1={VH * f} y2={VH * f} class="lc__grat" />)}
+          {[0.25, 0.5, 0.75].map((f) => <line y1="0" y2={VH} x1={VW * f} x2={VW * f} class="lc__grat" />)}
+          {items.slice(1).map((it) => {
+            const a = pt(items[0].lat, items[0].lng), b = pt(it.lat, it.lng);
+            return <path d={`M${a.x},${a.y} Q${(a.x + b.x) / 2},${Math.min(a.y, b.y) - 60} ${b.x},${b.y}`} class="lc__arc" />;
+          })}
+          {items.map((it, i) => {
+            const p = pt(it.lat, it.lng);
+            return (
+              <g class:list={['lc__pin', i === 0 && 'is-hq']} data-lc-pin={i} transform={`translate(${p.x} ${p.y})`}>
+                <circle r="22" class="lc__halo" />
+                <circle r={i === 0 ? 7 : 5} class="lc__core" />
+                <text x="14" y="-12" class="lc__label">{it.city}</text>
+              </g>
+            );
+          })}
+        </svg>
+        <figcaption class="label subtle lc__coords">
+          <span>{fmt(maxLat, 'N', 'S')} · {fmt(minLng, 'L', 'O')}</span>
+          <span>{fmt(minLat, 'N', 'S')} · {fmt(maxLng, 'L', 'O')}</span>
+        </figcaption>
+      </figure>
+      <ol class="lc__list">
+        {items.map((it, i) => (
+          <li data-lc-item={i}>
+            <span class="label subtle tabular">{pad(i + 1)}</span>
+            <span class="t-md">{it.city} <span class="muted">— {it.region}</span></span>
+            <span class="label lc__kind">{it.kind}</span>
+            {it.detail && <span class="label muted lc__detail">{it.detail}</span>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+)}
+
+<style>
+  .lc__grid {
+    display: grid;
+    gap: 3rem var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lc__map {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .lc__map svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .lc__dot {
+    fill: var(--color-line);
+  }
+  .lc__grat {
+    stroke: var(--color-line);
+    stroke-dasharray: 2 6;
+  }
+  .lc__arc {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-opacity: 0.45;
+    stroke-width: 1;
+  }
+  .lc__halo {
+    fill: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .lc__core {
+    fill: var(--color-bg);
+    stroke: var(--color-accent);
+    stroke-width: 2;
+  }
+  .is-hq .lc__core {
+    fill: var(--color-accent);
+  }
+  .lc__label {
+    fill: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .lc__pin.is-on .lc__halo {
+    opacity: 0.18;
+  }
+  .lc__pin.is-on .lc__label {
+    fill: var(--color-ink);
+  }
+  .lc__coords {
+    display: flex;
+    justify-content: space-between;
+  }
+  .lc__list {
+    grid-column: 1 / -1;
+    align-self: center;
+  }
+  .lc__list li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 0.25rem 1rem;
+    align-items: baseline;
+    padding: 1.1rem 0;
+    border-top: var(--shape-border) solid var(--color-line);
+    cursor: default;
+    transition: color 0.3s;
+  }
+  .lc__list li:last-child {
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .lc__list li.is-on {
+    color: var(--color-accent);
+  }
+  .lc__kind {
+    color: var(--color-accent);
+  }
+  .lc__detail {
+    grid-column: 2 / -1;
+  }
+  @media (min-width: 900px) {
+    .lc__map {
+      grid-column: 1 / span 7;
+    }
+    .lc__list {
+      grid-column: 9 / -1;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-lc]').forEach((root) => {
+    const pins = root.querySelectorAll<SVGGElement>('[data-lc-pin]');
+    const items = root.querySelectorAll<HTMLElement>('[data-lc-item]');
+    const set = (i: number | null) => {
+      pins.forEach((p) => p.classList.toggle('is-on', Number(p.dataset.lcPin) === i));
+      items.forEach((it) => it.classList.toggle('is-on', Number(it.dataset.lcItem) === i));
+    };
+    items.forEach((it) => {
+      const i = Number(it.dataset.lcItem);
+      it.addEventListener('pointerenter', () => set(i));
+      it.addEventListener('pointerleave', () => set(null));
+    });
+  });
+</script>

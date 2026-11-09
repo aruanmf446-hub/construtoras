@@ -1,0 +1,125 @@
+---
+/** (12) Sustainability — full-bleed image with monumental figures, then commitments. */
+import Media from '../components/Media.astro';
+import Headline from '../components/Headline.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const s = content.sustainability;
+---
+<section class="su" id={anchor} data-nav-label={navLabel} aria-labelledby={`${anchor}-t`}>
+  <div class="su__hero">
+    <Media src={s.image.src} alt={s.image.alt} sizes="100vw" parallax={0.2} class="su__img" />
+    <div class="su__scrim" aria-hidden="true"></div>
+    <div class="container su__over">
+      <p class="label su__meta">
+        {index !== undefined && <span class="tabular">({pad(index)})</span>}
+        <span>{s.eyebrow}</span>
+      </p>
+      <Headline lines={s.title} size="xxl" id={`${anchor}-t`} />
+      <dl class="su__figures">
+        {s.figures.map((f) => (
+          <div data-reveal="fade"><dd class="display">{f.value}</dd><dt class="label">{f.label}</dt></div>
+        ))}
+      </dl>
+    </div>
+  </div>
+  <div class="container su__body section--tight">
+    <p class="lead su__intro" data-reveal="fade">{s.intro}</p>
+    <ul class="su__items">
+      {s.items.map((it, i) => (
+        <li data-reveal="fade">
+          <span class="label subtle tabular">{pad(i + 1)}</span>
+          <h3 class="t-md">{it.title}</h3>
+          <p class="muted">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+    {site.demo && s.note && <p class="demo-note label">{s.note}</p>}
+  </div>
+</section>
+
+<style>
+  .su {
+    position: relative;
+  }
+  .su__hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    color: #f3eee6;
+  }
+  .su__hero :global(.su__img) {
+    position: absolute;
+    inset: 0;
+  }
+  .su__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--color-scrim) 10%, transparent 70%), linear-gradient(180deg, rgba(0,0,0,.35), transparent 30%);
+  }
+  .su__over {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 2rem;
+    padding-block: 8rem 4rem;
+  }
+  .su__over :global(.accent) {
+    color: #f3eee6;
+  }
+  .su__meta {
+    display: flex;
+    gap: 1rem;
+    color: rgba(243, 238, 230, 0.75);
+  }
+  .su__figures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--layout-gutter);
+    border-top: 1px solid rgba(243, 238, 230, 0.25);
+    padding-top: 1.25rem;
+  }
+  .su__figures > div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .su__figures dd {
+    font-size: clamp(2.6rem, 6vw, 6rem);
+    line-height: 0.9;
+  }
+  .su__figures dt {
+    color: rgba(243, 238, 230, 0.75);
+  }
+  .su__body {
+    display: grid;
+    gap: 3rem;
+  }
+  .su__items {
+    display: grid;
+    gap: var(--layout-gutter);
+  }
+  .su__items li {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 1.25rem;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  @media (min-width: 900px) {
+    .su__intro {
+      max-width: 40ch;
+      margin-left: 33%;
+    }
+    .su__items {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

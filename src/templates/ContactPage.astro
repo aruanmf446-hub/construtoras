@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionRenderer from '../components/SectionRenderer.astro';
+import { content } from '../content';
+import { pageSections } from '../lib/routes';
+import { breadcrumbLd } from '../lib/seo';
+import { linesToText } from '../lib/text';
+
+const h = content.pages.contact;
+---
+<BaseLayout page="contact" title={linesToText(h.title)} description={h.intro}
+  jsonLd={[breadcrumbLd([{ name: 'Início', url: '/' }, { name: linesToText(h.title), url: Astro.url.pathname }])]}>
+  <PageHeader header={h} />
+  <SectionRenderer list={pageSections('contact')} page="contact" overrides={{ contact: { compact: true } }} />
+</BaseLayout>

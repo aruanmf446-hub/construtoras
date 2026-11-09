@@ -1,0 +1,31 @@
+---
+/**
+ * Inner pages are generated from config/sections.config.ts:
+ * only enabled pages exist, at the paths you configure.
+ */
+import type { GetStaticPaths } from 'astro';
+import { pages } from '../config/sections.config';
+import { projects } from '../content/projects';
+import ProjectsPage from '../templates/ProjectsPage.astro';
+import ProjectPage from '../templates/ProjectPage.astro';
+import AboutPage from '../templates/AboutPage.astro';
+import ContactPage from '../templates/ContactPage.astro';
+
+export const getStaticPaths = (() => {
+  const clean = (p: string) => p.replace(/^\/+|\/+$/g, '');
+  const out: { params: { slug: string }; props: { kind: string; slug?: string } }[] = [];
+  for (const kind of ['projects', 'about', 'contact'] as const) {
+    if (pages[kind].enabled && clean(pages[kind].path)) out.push({ params: { slug: clean(pages[kind].path) }, props: { kind } });
+  }
+  if (pages.project.enabled) {
+    for (const p of projects) out.push({ params: { slug: `${clean(pages.project.path)}/${p.slug}` }, props: { kind: 'project', slug: p.slug } });
+  }
+  return out;
+}) satisfies GetStaticPaths;
+
+const { kind, slug } = Astro.props;
+---
+{kind === 'projects' && <ProjectsPage />}
+{kind === 'about' && <AboutPage />}
+{kind === 'contact' && <ContactPage />}
+{kind === 'project' && slug && <ProjectPage slug={slug} />}

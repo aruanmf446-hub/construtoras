@@ -1,0 +1,274 @@
+---
+/**
+ * (06) Project details.
+ * variant 'spotlight' → home-page feature of one development (content.projectSpotlight.slug)
+ * variant 'full'      → overview, story, highlights and typologies (project page)
+ */
+import Media from '../components/Media.astro';
+import Button from '../components/Button.astro';
+import Headline from '../components/Headline.astro';
+import { content } from '../content';
+import { getProject, projects, type Project } from '../content/projects';
+import { pad } from '../lib/text';
+import { projectHref, whatsappHref } from '../lib/routes';
+import type { SectionProps } from '../lib/section';
+
+interface Props extends SectionProps {
+  slug?: string;
+  project?: Project;
+}
+const { anchor, navLabel, index, variant = 'spotlight', slug, project: given } = Astro.props;
+const project = given ?? getProject(slug ?? content.projectSpotlight.slug) ?? projects[0];
+const href = project ? projectHref(project.slug) : null;
+const wa = project ? whatsappHref(`Olá! Tenho interesse no ${project.name}.`) : null;
+const ui = content.ui;
+---
+{project && variant === 'spotlight' && (
+  <section class="pd pd--spot section section--alt" id={anchor} data-nav-label={navLabel} data-project aria-labelledby={`${anchor}-t`}>
+    <div class="container pd__grid">
+      <div class="pd__visual">
+        <div data-vt-media>
+          <Media src={project.coverPortrait ?? project.cover} alt={project.coverAlt} sizes="(min-width: 900px) 45vw, 100vw" class="pd__img" parallax={0.12} slats={6} />
+        </div>
+        <div class="pd__dim label subtle" aria-hidden="true"><span></span>{project.specs[0]?.value} {project.specs[0]?.label}<span></span></div>
+      </div>
+      <div class="pd__body">
+        <p class="label muted pd__meta">
+          {index !== undefined && <span class="tabular">({pad(index)})</span>}
+          <span>{content.projectSpotlight.eyebrow}</span>
+          <span class="pd__badge">{project.status}</span>
+        </p>
+        <Headline lines={[project.name]} size="xl" id={`${anchor}-t`} />
+        <p class="lead" data-reveal="fade">{project.summary}</p>
+        <dl class="pd__specs">
+          {project.specs.slice(0, 6).map((s) => (
+            <div data-reveal="fade"><dt class="label subtle">{s.label}</dt><dd>{s.value}</dd></div>
+          ))}
+        </dl>
+        <div class="pd__ctas" data-reveal="fade">
+          <Button href={href} label={ui.viewProject} variant="solid" />
+          <Button href={wa} label={ui.whatsapp} />
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{project && variant === 'full' && (
+  <section class="pd pd--full section" id={anchor} data-nav-label={navLabel} aria-label={project.name}>
+    <div class="container">
+      <div class="pd__overview">
+        <p class="label muted">{ui.status} · {project.status}</p>
+        <p class="pd__summary" data-reveal="fade">{project.summary}</p>
+        <dl class="pd__table">
+          <div><dt class="label subtle">{ui.location}</dt><dd>{project.location.district ? `${project.location.district}, ` : ''}{project.location.city} — {project.location.region}</dd></div>
+          <div><dt class="label subtle">{ui.area}</dt><dd>{project.area}</dd></div>
+          <div><dt class="label subtle">{ui.year}</dt><dd>{project.year}</dd></div>
+          {project.specs.map((s) => <div><dt class="label subtle">{s.label}</dt><dd>{s.value}</dd></div>)}
+        </dl>
+      </div>
+
+      <div class="pd__story">
+        {project.story.map((s, i) => (
+          <article class="pd__chapter">
+            <span class="label subtle tabular">{pad(i + 1)}</span>
+            <h3 class="display t-lg" data-reveal="fade">{s.title}</h3>
+            <p class="prose" data-reveal="fade">{s.text}</p>
+          </article>
+        ))}
+      </div>
+
+      {project.highlights.length > 0 && (
+        <ul class="pd__highlights">
+          {project.highlights.map((h, i) => (
+            <li data-reveal="fade"><span class="label subtle tabular">{pad(i + 1)}</span><span class="t-md">{h}</span></li>
+          ))}
+        </ul>
+      )}
+
+      {project.typologies && project.typologies.length > 0 && (
+        <div class="pd__typo">
+          <p class="label muted">Tipologias</p>
+          <ul>
+            {project.typologies.map((t) => (
+              <li data-reveal="fade"><span class="display t-lg">{t.area}</span><span>{t.name}</span><span class="muted">{t.detail}</span></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {project.demo && <p class="demo-note label">Projeto demonstrativo · imagens geradas proceduralmente</p>}
+    </div>
+  </section>
+)}
+
+<style>
+  .pd__grid {
+    display: grid;
+    gap: 3rem var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+  }
+  .pd__visual {
+    grid-column: 1 / -1;
+  }
+  .pd__visual :global(.pd__img) {
+    aspect-ratio: 4 / 5;
+    max-height: 85vh;
+    width: 100%;
+  }
+  .pd__dim {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .pd__dim span {
+    flex: 1;
+    height: 1px;
+    background: var(--color-line);
+    position: relative;
+  }
+  .pd__dim span::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 1px;
+    height: 9px;
+    background: var(--color-ink-subtle);
+  }
+  .pd__dim span:first-child::before {
+    left: 0;
+  }
+  .pd__dim span:last-child::before {
+    right: 0;
+  }
+  .pd__body {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 2rem;
+  }
+  .pd__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+  .pd__badge {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+  }
+  .pd__specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .pd__specs > div {
+    padding: 1rem 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .pd__specs dd {
+    margin-top: 0.3rem;
+    font-size: var(--type-md);
+  }
+  .pd__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  @media (min-width: 900px) {
+    .pd__visual {
+      grid-column: 1 / span 6;
+    }
+    .pd__body {
+      grid-column: 8 / span 5;
+    }
+    .pd__specs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* full */
+  .pd__overview {
+    display: grid;
+    gap: 2rem var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .pd__overview > * {
+    grid-column: 1 / -1;
+  }
+  .pd__summary {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3.6vw, 3.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .pd__table {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .pd__table > div {
+    padding: 1rem 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .pd__table dd {
+    margin-top: 0.3rem;
+  }
+  .pd__story {
+    display: grid;
+    gap: 3rem var(--layout-gutter);
+    margin-top: clamp(5rem, 10vw, 9rem);
+  }
+  .pd__chapter {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    padding-top: 1.25rem;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .pd__highlights {
+    margin-top: clamp(5rem, 10vw, 9rem);
+    display: grid;
+    gap: 0;
+  }
+  .pd__highlights li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    padding: 1.25rem 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .pd__typo {
+    margin-top: clamp(5rem, 10vw, 9rem);
+  }
+  .pd__typo ul {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--layout-gutter);
+  }
+  .pd__typo li {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-accent);
+  }
+  @media (min-width: 900px) {
+    .pd__overview > p.label {
+      grid-column: 1 / span 3;
+    }
+    .pd__summary {
+      grid-column: 4 / -1;
+    }
+    .pd__table {
+      grid-column: 4 / -1;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .pd__story {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .pd__highlights {
+      margin-left: 25%;
+    }
+  }
+</style>

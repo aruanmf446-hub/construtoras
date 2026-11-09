@@ -1,0 +1,242 @@
+---
+/**
+ * Individual project page — generated for every entry in content/projects.ts.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Media from '../components/Media.astro';
+import Headline from '../components/Headline.astro';
+import SectionRenderer from '../components/SectionRenderer.astro';
+import ProjectDetails from '../sections/ProjectDetails.astro';
+import Gallery from '../sections/Gallery.astro';
+import { content } from '../content';
+import { projects, getProject } from '../content/projects';
+import { sections } from '../config/sections.config';
+import { anchorOf, pageHref, pageSections, projectHref } from '../lib/routes';
+import { breadcrumbLd, projectLd } from '../lib/seo';
+import { firstAvailable } from '../lib/media';
+import { getImage } from 'astro:assets';
+import { site } from '../config/site.config';
+import type { SectionRef } from '../config/types';
+
+interface Props {
+  slug: string;
+}
+const project = getProject(Astro.props.slug)!;
+const i = projects.indexOf(project);
+const next = projects.length > 1 ? projects[(i + 1) % projects.length] : null;
+const ui = content.ui;
+const projectsHref = pageHref('projects');
+const cover = firstAvailable(project.cover);
+const ogImg = cover ? (await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : undefined;
+const extra: SectionRef[] = pageSections('project');
+const crumbs = [
+  { name: 'Início', url: '/' },
+  ...(projectsHref ? [{ name: 'Projetos', url: projectsHref }] : []),
+  { name: project.name, url: Astro.url.pathname },
+];
+const showGallery = project.gallery.length > 0 && sections.gallery.enabled;
+// Projects can ship their own model for the 3D section.
+const overrides = project.model ? { 'experience-3d': { modelUrl: project.model } } : {};
+---
+<BaseLayout
+  page={null}
+  extraSections={extra}
+  customIndex={[
+    { label: 'Sobre o projeto', anchor: anchorOf('project-details') },
+    ...(showGallery ? [{ label: 'Galeria', anchor: anchorOf('gallery') }] : []),
+  ]}
+  title={project.name}
+  description={project.summary}
+  image={project.cover}
+  type="article"
+  onMedia
+  jsonLd={[projectLd(project, new URL(Astro.url.pathname, site.url).toString(), ogImg), breadcrumbLd(crumbs)]}
+>
+  <section class="pj" data-nav-label={project.name}>
+    <div class="pj__media" data-vt-media style="view-transition-name: project-media">
+      <Media src={project.cover} srcMobile={project.coverPortrait} alt={project.coverAlt} sizes="100vw" priority class="pj__img" parallax={0.18} />
+      <div class="pj__scrim" aria-hidden="true"></div>
+    </div>
+    <div class="container pj__content">
+      <nav aria-label="Trilha" class="label pj__crumbs">
+        <ol>
+          {crumbs.map((c, k) => (
+            <li>{k < crumbs.length - 1 ? <a class="link-u" href={c.url}>{c.name}</a> : <span aria-current="page">{c.name}</span>}</li>
+          ))}
+        </ol>
+      </nav>
+      <Headline lines={[project.name]} as="h1" size="mega" />
+      <div class="pj__meta">
+        <p class="pj__tag">{project.tagline}</p>
+        <dl>
+          <div><dt class="label">{ui.status}</dt><dd>{project.status}</dd></div>
+          <div><dt class="label">{ui.location}</dt><dd>{project.location.city}, {project.location.region}</dd></div>
+          <div><dt class="label">{ui.year}</dt><dd>{project.year}</dd></div>
+          <div><dt class="label">{ui.area}</dt><dd>{project.area}</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <ProjectDetails variant="full" project={project} anchor={anchorOf('project-details')} navLabel="Sobre o projeto" />
+
+  {project.video && (
+    <section class="pj__film" aria-label="Filme do projeto">
+      <video class="pj__video" muted loop playsinline preload="none" data-pj-video aria-hidden="true">
+        <source src={project.video} type="video/mp4" />
+      </video>
+    </section>
+  )}
+
+  {showGallery && (
+    <Gallery anchor={anchorOf('gallery')} navLabel="Galeria" images={project.gallery} eyebrow="Galeria do projeto" title={['Detalhes &', '*atmosfera*']} />
+  )}
+
+  <SectionRenderer list={extra} page={null} overrides={overrides} />
+
+  {next && projectHref(next.slug) && (
+    <a href={projectHref(next.slug)} class="pj__next" data-project data-project-link>
+      <div data-vt-media class="pj__next-media">
+        <Media src={next.cover} alt={next.coverAlt} sizes="100vw" />
+      </div>
+      <div class="container pj__next-content">
+        <span class="label">{ui.nextProject} →</span>
+        <span class="display t-xxl">{next.name}</span>
+      </div>
+    </a>
+  )}
+</BaseLayout>
+
+<style>
+  .pj {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: clip;
+    color: #f3eee6;
+  }
+  .pj__media {
+    position: absolute;
+    inset: 0;
+  }
+  .pj__media :global(.pj__img) {
+    position: absolute;
+    inset: 0;
+  }
+  .pj__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--color-scrim) 5%, transparent 60%), linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent 25%);
+  }
+  .pj__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 1.5rem;
+    padding-block: 9rem clamp(6.5rem, 7vw, 4rem);
+  }
+  .pj__content :global(.accent) {
+    color: inherit;
+  }
+  .pj__crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: rgba(243, 238, 230, 0.75);
+  }
+  .pj__crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+  }
+  .pj__meta {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(243, 238, 230, 0.25);
+  }
+  .pj__tag {
+    max-width: 32ch;
+    font-size: var(--type-md);
+  }
+  .pj__meta dl {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 1rem 2rem;
+    justify-content: start;
+  }
+  .pj__meta dt {
+    color: rgba(243, 238, 230, 0.6);
+    margin-bottom: 0.25rem;
+  }
+  .pj__film {
+    padding-inline: var(--layout-margin);
+  }
+  .pj__video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--color-surface);
+    filter: var(--image-filter);
+  }
+  .pj__next {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 80vh;
+    overflow: hidden;
+    color: #f3eee6;
+  }
+  .pj__next-media {
+    position: absolute;
+    inset: 0;
+  }
+  .pj__next-media :global(.media) {
+    height: 100%;
+  }
+  .pj__next-media :global(img) {
+    transition: transform 1.6s var(--motion-ease-out);
+  }
+  .pj__next:hover .pj__next-media :global(img) {
+    transform: scale(1.05);
+  }
+  .pj__next::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--color-scrim), transparent 70%);
+  }
+  .pj__next-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 1rem;
+    padding-block: 4rem 7rem;
+  }
+  @media (min-width: 900px) {
+    .pj__meta {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+    .pj__meta dl {
+      grid-template-columns: repeat(4, auto);
+      gap: 3rem;
+    }
+  }
+</style>
+
+<script>
+  import { motionOk } from '../scripts/motion/core';
+  const v = document.querySelector<HTMLVideoElement>('[data-pj-video]');
+  if (v) {
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && motionOk()) {
+        v.preload = 'auto';
+        v.play().catch(() => {});
+      } else v.pause();
+    });
+    io.observe(v);
+    // No motion: show the first frame as a still.
+    if (!motionOk()) v.preload = 'metadata';
+  }
+</script>

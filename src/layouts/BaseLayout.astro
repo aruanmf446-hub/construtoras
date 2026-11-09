@@ -1,0 +1,142 @@
+---
+/**
+ * Base document: SEO, theme tokens, navigation, footer, motion engine.
+ */
+import { getImage } from 'astro:assets';
+import '../styles/fonts.css';
+import '../styles/global.css';
+import { fontPreloads } from '../styles/fonts.preload';
+import FloatingNav from '../components/FloatingNav.astro';
+import Footer from '../components/Footer.astro';
+import Logo from '../components/Logo.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import { themeCss, activeTheme } from '../lib/theme';
+import { firstAvailable } from '../lib/media';
+import { organizationLd, absolute } from '../lib/seo';
+import { resolveCta } from '../lib/routes';
+import type { PageId, SectionRef } from '../config/types';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** OG image path relative to src/assets/media. */
+  image?: string;
+  page: PageId | null;
+  extraSections?: SectionRef[];
+  /** Extra entries for the navigation index (label + anchor). */
+  customIndex?: { label: string; anchor: string }[];
+  jsonLd?: object[];
+  noindex?: boolean;
+  /** The page opens on full-bleed media (hero): masthead uses the light logo. */
+  onMedia?: boolean;
+  type?: 'website' | 'article';
+}
+
+const { title, description = site.seo.description, image = site.seo.ogImage, page, extraSections = [], customIndex = [], jsonLd = [], noindex = false, onMedia = false, type = 'website' } = Astro.props;
+
+const fullTitle = title ? site.seo.titleTemplate.replace('%s', title) : site.seo.defaultTitle;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const ogSource = firstAvailable(image, site.seo.ogImage);
+const og = ogSource ? await getImage({ src: ogSource, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 82 }) : null;
+const theme = activeTheme();
+const ld = [organizationLd(site.identity.logo.onLight ?? undefined), ...jsonLd];
+const contactHref = resolveCta('contact', page ?? undefined);
+---
+<!doctype html>
+<html lang={site.lang} data-smooth={String(site.motion.smoothScroll)} data-theme={site.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={site.seo.keywords.join(', ')} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content={theme.color.bg} />
+    <link rel="icon" href={site.identity.favicon} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {fontPreloads.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.identity.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {og && <meta property="og:image" content={absolute(og.src)} />}
+    {og && <meta property="og:image:width" content="1200" />}
+    {og && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    {og && <meta name="twitter:image" content={absolute(og.src)} />}
+
+    <style is:inline set:html={themeCss(theme)}></style>
+    {site.motion.pageTransitions && <style is:inline>@view-transition{navigation:auto}</style>}
+
+    <script is:inline>
+      // Motion gate — hides reveal targets only when animation can run.
+      (function () {
+        var d = document.documentElement;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion-ok');
+        setTimeout(function () { if (!window.__motionReady) d.classList.add('motion-failsafe'); }, 3500);
+      })();
+    </script>
+    {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link label" href="#conteudo">{content.ui.skip}</a>
+    <header class:list={['masthead container', onMedia && 'masthead--on-media']}>
+      <a href="/" class="masthead__logo" aria-label={site.identity.name}><Logo variant={onMedia ? 'onDark' : 'auto'} /></a>
+      {contactHref && <a class="masthead__cta label link-u" href={contactHref}>{site.contact.phone.display}</a>}
+    </header>
+    <FloatingNav page={page} extraSections={extraSections} customIndex={customIndex} />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    {theme.image.grain > 0 && <div class="grain" aria-hidden="true"></div>}
+    <script>
+      import '../scripts/motion/index';
+    </script>
+  </body>
+</html>
+
+<style>
+  .masthead {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 5.5rem;
+    max-width: none;
+    pointer-events: none;
+  }
+  .masthead > * {
+    pointer-events: auto;
+  }
+  .masthead--on-media {
+    color: #f3eee6;
+  }
+  .masthead__tag {
+    display: none;
+  }
+  .masthead__cta {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .masthead__logo {
+      /* leave room for the floating dock in the centre */
+      margin-right: auto;
+    }
+    .masthead__cta {
+      display: block;
+    }
+  }
+</style>

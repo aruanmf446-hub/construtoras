@@ -1,0 +1,208 @@
+---
+/**
+ * (07) Services & specialities — accordion index with a sticky image that
+ * crossfades to the active service.
+ */
+import Media from '../components/Media.astro';
+import Headline from '../components/Headline.astro';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const s = content.services;
+---
+{s.items.length > 0 && (
+<section class="sv section" id={anchor} data-nav-label={navLabel} data-sv aria-labelledby={`${anchor}-t`}>
+  <div class="container sv__grid">
+    <div class="sv__aside">
+      <p class="label muted sv__meta">
+        {index !== undefined && <span class="tabular">({pad(index)})</span>}
+        <span>{s.eyebrow}</span>
+      </p>
+      <Headline lines={s.title} size="xl" id={`${anchor}-t`} />
+      <p class="prose" data-reveal="fade">{s.intro}</p>
+      <div class="sv__images" aria-hidden="true">
+        {s.items.map((it, i) => it.image && (
+          <div class:list={['sv__image', i === 0 && 'is-active']} data-sv-image={i}>
+            <Media src={it.image.src} alt="" sizes="(min-width: 900px) 35vw, 0px" />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <ol class="sv__list">
+      {s.items.map((it, i) => (
+        <li class:list={['sv__item', i === 0 && 'is-open']} data-sv-item={i} data-reveal="fade">
+          <h3>
+            <button type="button" class="sv__btn" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`${anchor}-p${i}`} id={`${anchor}-b${i}`}>
+              <span class="label subtle tabular">{pad(i + 1)}</span>
+              <span class="display sv__title">{it.title}</span>
+              <span class="sv__plus" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="sv__panel" id={`${anchor}-p${i}`} role="region" aria-labelledby={`${anchor}-b${i}`}>
+            <div class="sv__panel-inner">
+              <p class="muted">{it.description}</p>
+              <ul class="sv__tags">
+                {it.tags.map((t) => <li class="label">{t}</li>)}
+              </ul>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+)}
+
+<style>
+  .sv__grid {
+    display: grid;
+    gap: 3rem var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .sv__aside {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .sv__meta {
+    display: flex;
+    gap: 1rem;
+  }
+  .sv__images {
+    display: none;
+  }
+  .sv__list {
+    grid-column: 1 / -1;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .sv__item {
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .sv__btn {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: center;
+    width: 100%;
+    padding: 1.6rem 0;
+    text-align: left;
+  }
+  .sv__title {
+    font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+    line-height: 1;
+    transition: color 0.4s, transform 0.6s var(--motion-ease-out);
+  }
+  .sv__btn:hover .sv__title {
+    transform: translateX(0.75rem);
+  }
+  .is-open .sv__title {
+    color: var(--color-accent);
+  }
+  .sv__plus {
+    position: relative;
+    width: 18px;
+    height: 18px;
+  }
+  .sv__plus::before,
+  .sv__plus::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.5s var(--motion-ease-out);
+  }
+  .sv__plus::after {
+    transform: rotate(90deg);
+  }
+  .is-open .sv__plus::after {
+    transform: rotate(0);
+  }
+  .sv__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.7s var(--motion-ease-out);
+  }
+  .is-open .sv__panel {
+    grid-template-rows: 1fr;
+  }
+  .sv__panel-inner {
+    overflow: hidden;
+    display: grid;
+    gap: 1.25rem;
+    padding-left: 3rem;
+  }
+  .is-open .sv__panel-inner {
+    padding-bottom: 2rem;
+  }
+  .sv__panel-inner p {
+    max-width: 48ch;
+  }
+  .sv__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .sv__tags li {
+    padding: 0.4rem 0.7rem;
+    border: var(--shape-border) solid var(--color-line);
+  }
+  @media (min-width: 900px) {
+    .sv__aside {
+      grid-column: 1 / span 5;
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
+    .sv__list {
+      grid-column: 7 / -1;
+      margin-top: 4rem;
+    }
+    .sv__images {
+      display: block;
+      position: relative;
+      aspect-ratio: 4 / 3;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+    .sv__image {
+      position: absolute;
+      inset: 0;
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path 1s var(--motion-ease);
+    }
+    .sv__image.is-active {
+      clip-path: inset(0 0 0 0);
+      z-index: 1;
+    }
+    .sv__image :global(.media) {
+      height: 100%;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-sv]').forEach((root) => {
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-sv-item]'));
+    const images = root.querySelectorAll<HTMLElement>('[data-sv-image]');
+    const activate = (i: number) =>
+      images.forEach((img) => img.classList.toggle('is-active', Number(img.dataset.svImage) === i));
+    items.forEach((item, i) => {
+      const btn = item.querySelector<HTMLButtonElement>('button')!;
+      btn.addEventListener('click', () => {
+        const open = !item.classList.contains('is-open');
+        items.forEach((other) => {
+          const isThis = other === item;
+          other.classList.toggle('is-open', isThis && open);
+          other.querySelector('button')!.setAttribute('aria-expanded', String(isThis && open));
+        });
+        if (open) activate(i);
+      });
+      item.addEventListener('pointerenter', () => activate(i));
+    });
+  });
+</script>

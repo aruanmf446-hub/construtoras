@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionRenderer from '../components/SectionRenderer.astro';
+import { pageSections, sectionId } from '../lib/routes';
+
+const list = pageSections('home');
+const onMedia = list.length > 0 && sectionId(list[0]) === 'hero';
+---
+<BaseLayout page="home" onMedia={onMedia}>
+  <SectionRenderer list={list} page="home" />
+</BaseLayout>

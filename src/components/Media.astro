@@ -1,0 +1,76 @@
+---
+/**
+ * Responsive, optimised image. `src` is a path relative to src/assets/media.
+ * Supports art direction (srcMobile), parallax and the brise-soleil slat reveal.
+ */
+import { getImage } from 'astro:assets';
+import { firstAvailable } from '../lib/media';
+import Slats from './Slats.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  sizes?: string;
+  priority?: boolean;
+  class?: string;
+  /** Parallax strength (e.g. 0.12). Adds a bleed wrapper. */
+  parallax?: number;
+  /** Number of brise slats for the reveal (0 = none). */
+  slats?: number;
+  /** 'mask' clips the image in on scroll. */
+  reveal?: 'mask' | 'none';
+  srcMobile?: string;
+  style?: string;
+  transitionName?: string;
+}
+
+const {
+  src,
+  alt,
+  sizes = '100vw',
+  priority = false,
+  class: cls = '',
+  parallax = 0,
+  slats = 0,
+  reveal = 'none',
+  srcMobile,
+  style,
+  transitionName,
+} = Astro.props;
+
+const image = firstAvailable(src);
+const mobile = srcMobile ? firstAvailable(srcMobile) : undefined;
+const steps = [480, 768, 1080, 1440, 1920, 2400];
+
+async function build(img: NonNullable<typeof image>) {
+  const widths = steps.filter((w) => w < img.width).concat(img.width);
+  const webp = await getImage({ src: img, widths, format: 'webp', quality: 78 });
+  const fallback = await getImage({ src: img, width: Math.min(1440, img.width), format: 'jpg', quality: 80 });
+  return { srcset: webp.srcSet.attribute, fallback: fallback.src, width: img.width, height: img.height };
+}
+
+const main = image ? await build(image) : null;
+const small = mobile ? await build(mobile) : null;
+const styles = [style, transitionName ? `view-transition-name:${transitionName}` : ''].filter(Boolean).join(';') || undefined;
+---
+<div class:list={['media', cls]} data-reveal={reveal !== 'none' ? reveal : undefined} style={styles}>
+  <div class:list={['media__inner', parallax && 'media__inner--bleed']} data-parallax={parallax || undefined}>
+    {main && (
+      <picture>
+        {small && <source media="(max-width: 700px)" type="image/webp" srcset={small.srcset} sizes={sizes} />}
+        <source type="image/webp" srcset={main.srcset} sizes={sizes} />
+        <img
+          src={main.fallback}
+          alt={alt}
+          width={main.width}
+          height={main.height}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchpriority={priority ? 'high' : 'auto'}
+          decoding={priority ? 'sync' : 'async'}
+        />
+      </picture>
+    )}
+  </div>
+  {slats > 0 && <Slats count={slats} />}
+  <slot />
+</div>

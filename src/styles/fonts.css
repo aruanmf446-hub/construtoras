@@ -1,0 +1,11 @@
+/*
+ * Self-hosted fonts (no external requests).
+ * To change fonts: `npm i @fontsource/<font>` (or @fontsource-variable/<font>),
+ * import it here and update the font families in config/theme.config.ts.
+ */
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource-variable/inter-tight/index.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';

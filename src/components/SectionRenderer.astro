@@ -1,0 +1,85 @@
+---
+/**
+ * Renders an ordered list of sections. Disabled sections are skipped,
+ * numbering (01, 02…) and navigation labels follow the rendered order.
+ */
+import Hero from '../sections/Hero.astro';
+import Manifesto from '../sections/Manifesto.astro';
+import AboutIntro from '../sections/AboutIntro.astro';
+import FeaturedProjects from '../sections/FeaturedProjects.astro';
+import Portfolio from '../sections/Portfolio.astro';
+import ProjectDetails from '../sections/ProjectDetails.astro';
+import Services from '../sections/Services.astro';
+import Stats from '../sections/Stats.astro';
+import History from '../sections/History.astro';
+import Timeline from '../sections/Timeline.astro';
+import Technology from '../sections/Technology.astro';
+import Sustainability from '../sections/Sustainability.astro';
+import Differentiators from '../sections/Differentiators.astro';
+import Certifications from '../sections/Certifications.astro';
+import Partners from '../sections/Partners.astro';
+import Gallery from '../sections/Gallery.astro';
+import Experience3D from '../sections/Experience3D.astro';
+import Testimonials from '../sections/Testimonials.astro';
+import Locations from '../sections/Locations.astro';
+import Contact from '../sections/Contact.astro';
+import { sections } from '../config/sections.config';
+import { anchorOf, isSectionEnabled, sectionId } from '../lib/routes';
+import type { PageId, SectionId, SectionRef } from '../config/types';
+
+interface Props {
+  list: SectionRef[];
+  page: PageId | null;
+  /** Start numbering at this value (e.g. when a page header precedes). */
+  startIndex?: number;
+  /** Props merged into specific sections, keyed by id. */
+  overrides?: Partial<Record<SectionId, Record<string, unknown>>>;
+}
+const { list, page, startIndex = 1, overrides = {} } = Astro.props;
+
+const registry = {
+  hero: Hero,
+  manifesto: Manifesto,
+  'about-intro': AboutIntro,
+  'featured-projects': FeaturedProjects,
+  portfolio: Portfolio,
+  'project-details': ProjectDetails,
+  services: Services,
+  stats: Stats,
+  history: History,
+  timeline: Timeline,
+  technology: Technology,
+  sustainability: Sustainability,
+  differentiators: Differentiators,
+  certifications: Certifications,
+  partners: Partners,
+  gallery: Gallery,
+  'experience-3d': Experience3D,
+  testimonials: Testimonials,
+  locations: Locations,
+  contact: Contact,
+} satisfies Record<SectionId, unknown>;
+
+let n = startIndex - 1;
+const rendered = list
+  .filter((ref) => isSectionEnabled(sectionId(ref)))
+  .map((ref) => {
+    const id = sectionId(ref);
+    const opts: { variant?: string; props?: Record<string, unknown> } = typeof ref === 'string' ? {} : ref;
+    const index = id === 'hero' ? undefined : ++n;
+    return {
+      id,
+      Component: registry[id] as any,
+      props: {
+        index,
+        anchor: anchorOf(id),
+        navLabel: sections[id].navLabel,
+        variant: opts.variant,
+        page,
+        ...(opts.props ?? {}),
+        ...(overrides[id] ?? {}),
+      },
+    };
+  });
+---
+{rendered.map(({ Component, props }) => <Component {...props} />)}

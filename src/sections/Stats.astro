@@ -1,0 +1,82 @@
+---
+/** (08) Institutional indicators — oversized counters on a hairline grid (inverse band). */
+import SectionHeader from '../components/SectionHeader.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const s = content.stats;
+const fmt = (v: number, d = 0) => v.toLocaleString(site.lang, { minimumFractionDigits: d, maximumFractionDigits: d });
+---
+{s.items.length > 0 && (
+<section class="st section section--inverse" id={anchor} data-nav-label={navLabel} aria-label={s.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={s.eyebrow} title={s.title} size="lg" />
+    <dl class="st__grid" style={`--n:${Math.min(s.items.length, 4)}`}>
+      {s.items.map((it) => (
+        <div class="st__item" data-reveal="fade">
+          <dt class="label muted">{it.label}</dt>
+          <dd class="st__value display">
+            {it.prefix && <span class="st__affix accent">{it.prefix}</span>}
+            <span class="tabular" data-count={it.value} data-decimals={it.decimals ?? 0}>{fmt(it.value, it.decimals)}</span>
+            {it.suffix && <span class="st__affix accent">{it.suffix}</span>}
+          </dd>
+          <dd class="label subtle">{it.detail ?? '\u00a0'}</dd>
+        </div>
+      ))}
+    </dl>
+    {site.demo && s.note && <p class="demo-note label">{s.note}</p>}
+  </div>
+</section>
+)}
+
+<style>
+  .st__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .st__item {
+    display: grid;
+    gap: 1rem;
+    align-content: space-between;
+    padding: 1.5rem 1rem 2rem 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+    min-height: clamp(12rem, 22vw, 20rem);
+  }
+  .st__item:nth-child(odd) {
+    border-right: var(--shape-border) solid var(--color-line);
+  }
+  .st__item:nth-child(even) {
+    padding-left: 1rem;
+  }
+  .st__value {
+    font-size: clamp(3.6rem, 9vw, 9rem);
+    line-height: 0.85;
+    display: flex;
+    align-items: baseline;
+    gap: 0.05em;
+  }
+  .st__affix {
+    font-size: 0.45em;
+    color: var(--color-accent);
+  }
+  @media (min-width: 900px) {
+    .st__grid {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    }
+    .st__item,
+    .st__item:nth-child(even) {
+      padding: 1.5rem 1.5rem 2rem;
+      border-right: var(--shape-border) solid var(--color-line);
+    }
+    .st__item:first-child {
+      padding-left: 0;
+    }
+    .st__item:last-child {
+      border-right: 0;
+    }
+  }
+</style>

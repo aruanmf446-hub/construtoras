@@ -1,0 +1,8 @@
+---
+interface Props { class?: string; direction?: 'right' | 'down' | 'up-right' }
+const { class: cls = 'btn__arrow', direction = 'right' } = Astro.props;
+const rot = { right: 0, down: 90, 'up-right': -45 }[direction];
+---
+<svg class={cls} viewBox="0 0 32 12" fill="none" aria-hidden="true" style={rot ? `transform:rotate(${rot}deg)` : undefined}>
+  <path d="M0 6h30M25 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" />
+</svg>

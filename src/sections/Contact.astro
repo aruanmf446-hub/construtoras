@@ -1,0 +1,270 @@
+---
+/**
+ * (20) Institutional contact — monumental CTA, direct channels and a serverless form
+ * that hands the message to WhatsApp or the e-mail client (no backend, no database).
+ */
+import Headline from '../components/Headline.astro';
+import Arrow from '../components/Arrow.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import { whatsappHref } from '../lib/routes';
+import type { SectionProps } from '../lib/section';
+
+interface Props extends SectionProps {
+  /** Hide the monumental title (used on the contact page, which has its own header). */
+  compact?: boolean;
+}
+const { anchor, navLabel, index, compact = false } = Astro.props;
+const c = content.contact;
+const s = site.contact;
+const wa = whatsappHref();
+const channels = [
+  { label: 'E-mail', value: s.email, href: `mailto:${s.email}` },
+  { label: 'Telefone', value: s.phone.display, href: s.phone.href },
+  wa ? { label: content.ui.whatsapp, value: 'Conversar agora', href: wa, external: true } : null,
+  { label: 'Endereço', value: `${s.address.street} · ${s.address.city}`, href: s.mapUrl, external: true },
+].filter(Boolean) as { label: string; value: string; href?: string; external?: boolean }[];
+const channel = c.form.channel === 'whatsapp' && wa ? 'whatsapp' : 'email';
+---
+<section class="ct section" id={anchor} data-nav-label={navLabel} aria-labelledby={`${anchor}-t`}>
+  <div class="container">
+    <p class="label muted ct__meta">
+      {index !== undefined && <span class="tabular">({pad(index)})</span>}
+      <span>{c.eyebrow}</span>
+    </p>
+    {compact ? <h2 class="sr-only" id={`${anchor}-t`}>{c.eyebrow}</h2> : <Headline lines={c.title} size="mega" id={`${anchor}-t`} class="ct__title" />}
+
+    <div class="ct__grid">
+      <div class="ct__aside">
+        <p class="lead" data-reveal="fade">{c.intro}</p>
+        <ul class="ct__channels">
+          {channels.map((ch) => (
+            <li data-reveal="fade">
+              <a href={ch.href} class="ct__channel" target={ch.external ? '_blank' : undefined} rel={ch.external ? 'noopener noreferrer' : undefined}>
+                <span class="label subtle">{ch.label}</span>
+                <span class="t-md">{ch.value}</span>
+                <Arrow direction={ch.external ? 'up-right' : 'right'} class="ct__arrow" />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="label subtle">{s.hours}</p>
+      </div>
+
+      {c.form.enabled && (
+        <form class="ct__form" data-ct-form data-channel={channel} data-wa={site.contact.whatsapp.number} data-email={s.email} novalidate>
+          <div class="ct__field">
+            <label for={`${anchor}-name`} class="label">{c.form.labels.name}</label>
+            <input id={`${anchor}-name`} name="name" required autocomplete="name" />
+          </div>
+          <div class="ct__row">
+            <div class="ct__field">
+              <label for={`${anchor}-email`} class="label">{c.form.labels.email}</label>
+              <input id={`${anchor}-email`} name="email" type="email" required autocomplete="email" />
+            </div>
+            <div class="ct__field">
+              <label for={`${anchor}-phone`} class="label">{c.form.labels.phone}</label>
+              <input id={`${anchor}-phone`} name="phone" type="tel" autocomplete="tel" />
+            </div>
+          </div>
+          <fieldset class="ct__field ct__subjects">
+            <legend class="label">{c.form.labels.subject}</legend>
+            <div>
+              {c.form.subjects.map((sub, i) => (
+                <label class="ct__chip">
+                  <input type="radio" name="subject" value={sub} checked={i === 0} />
+                  <span class="label">{sub}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="ct__field">
+            <label for={`${anchor}-msg`} class="label">{c.form.labels.message}</label>
+            <textarea id={`${anchor}-msg`} name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--solid ct__submit">
+            <span>{c.form.labels.submit}</span><Arrow />
+          </button>
+          <p class="label ct__status" role="status" data-ct-status data-sent={c.form.labels.sent}></p>
+        </form>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ct__meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .ct :global(.ct__title .line:nth-child(2)) {
+    padding-left: clamp(1.5rem, 12vw, 14rem);
+  }
+  .ct__grid {
+    display: grid;
+    gap: 4rem var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    margin-top: clamp(3rem, 7vw, 6rem);
+  }
+  .ct__aside {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .ct__channels {
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .ct__channel {
+    display: grid;
+    grid-template-columns: 6rem 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+    transition: color 0.3s;
+  }
+  .ct__channel:hover {
+    color: var(--color-accent);
+  }
+  .ct__channel .t-md {
+    overflow-wrap: anywhere;
+  }
+  .ct__channel :global(.ct__arrow) {
+    width: 1.6rem;
+    height: 0.8rem;
+    transition: transform 0.5s var(--motion-ease-out);
+  }
+  .ct__channel:hover :global(.ct__arrow) {
+    transform: translateX(4px);
+  }
+  .ct__form {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1.75rem;
+    align-content: start;
+  }
+  .ct__row {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .ct__field {
+    display: grid;
+    gap: 0.6rem;
+    border: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .ct__field label,
+  .ct__field legend {
+    color: var(--color-ink-muted);
+  }
+  .ct__field input,
+  .ct__field textarea {
+    width: 100%;
+    padding: 0.6rem 0 0.8rem;
+    background: transparent;
+    border: 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+    border-radius: 0;
+    font-size: var(--type-md);
+    transition: border-color 0.3s;
+    resize: vertical;
+  }
+  .ct__field input:focus,
+  .ct__field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+  .ct__field [aria-invalid='true'] {
+    border-color: #d06a5a;
+  }
+  .ct__subjects > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .ct__chip {
+    position: relative;
+    cursor: pointer;
+  }
+  .ct__chip input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .ct__chip span {
+    display: inline-block;
+    padding: 0.55rem 0.8rem;
+    border: var(--shape-border) solid var(--color-line);
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .ct__chip input:checked + span {
+    background: var(--color-ink);
+    color: var(--color-bg);
+    border-color: var(--color-ink);
+  }
+  .ct__chip input:focus-visible + span {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .ct__submit {
+    justify-self: start;
+  }
+  .ct__status {
+    color: var(--color-accent);
+    min-height: 1.4em;
+  }
+  @media (min-width: 700px) {
+    .ct__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 900px) {
+    .ct__aside {
+      grid-column: 1 / span 5;
+    }
+    .ct__form {
+      grid-column: 7 / -1;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-ct-form]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-ct-status]')!;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let firstInvalid: HTMLElement | null = null;
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input:not([type=radio]), textarea').forEach((el) => {
+        const ok = el.checkValidity();
+        el.setAttribute('aria-invalid', String(!ok));
+        if (!ok && !firstInvalid) firstInvalid = el;
+      });
+      if (firstInvalid) {
+        (firstInvalid as HTMLElement).focus();
+        status.textContent = 'Verifique os campos destacados.';
+        return;
+      }
+      const d = new FormData(form);
+      const text = [
+        `${d.get('subject')}`,
+        '',
+        `${d.get('message')}`,
+        '',
+        `— ${d.get('name')}`,
+        `${d.get('email')}${d.get('phone') ? ' · ' + d.get('phone') : ''}`,
+      ].join('\n');
+      if (form.dataset.channel === 'whatsapp') {
+        window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+      } else {
+        location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(String(d.get('subject')))}&body=${encodeURIComponent(text)}`;
+      }
+      status.textContent = status.dataset.sent || '';
+    });
+  });
+</script>

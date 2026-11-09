@@ -1,0 +1,34 @@
+---
+/** Brand logo. Falls back to a typographic wordmark when no file is configured. */
+import { site } from '../config/site.config';
+import { activeTheme } from '../lib/theme';
+
+interface Props { variant?: 'auto' | 'onDark' | 'onLight'; class?: string; markOnly?: boolean }
+const { variant = 'auto', class: cls = '', markOnly = false } = Astro.props;
+const { logo, name } = site.identity;
+const scheme = activeTheme().scheme;
+const which = variant === 'auto' ? (scheme === 'dark' ? 'onDark' : 'onLight') : variant;
+const file = markOnly ? logo.mark : logo[which];
+---
+{file ? (
+  <img
+    class:list={['logo', markOnly && 'logo--mark', !markOnly && scheme === 'light' && variant === 'auto' && 'logo--invertible', cls]}
+    src={file}
+    alt={name}
+    width={markOnly ? 28 : logo.width}
+    height={markOnly ? 28 : logo.height}
+    style={markOnly && scheme === 'light' ? 'filter:invert(1)' : undefined}
+  />
+) : (
+  <span class:list={['logo logo--text display', cls]}>{markOnly ? name.slice(0, 1) : name}</span>
+)}
+<style>
+  .logo {
+    height: auto;
+  }
+  .logo--text {
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+</style>

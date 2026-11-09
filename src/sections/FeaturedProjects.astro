@@ -1,0 +1,261 @@
+---
+/**
+ * (04) Selected projects — horizontal storytelling.
+ * Desktop + motion: pinned horizontal track scrubbed by scroll.
+ * Mobile / reduced motion: vertical editorial stack (same markup).
+ */
+import Media from '../components/Media.astro';
+import Headline from '../components/Headline.astro';
+import Button from '../components/Button.astro';
+import Arrow from '../components/Arrow.astro';
+import { content } from '../content';
+import { projects, getProject } from '../content/projects';
+import { pad } from '../lib/text';
+import { projectHref, resolveCta } from '../lib/routes';
+import type { SectionProps } from '../lib/section';
+
+interface Props extends SectionProps {
+  slugs?: string[];
+}
+const { anchor, navLabel, index, page, slugs } = Astro.props;
+const f = content.featuredProjects;
+const list = (slugs ?? f.slugs).map(getProject).filter(Boolean) as typeof projects;
+const items = list.length ? list : projects.slice(0, 4);
+const cta = f.cta && page !== 'projects' ? resolveCta(f.cta.to, page ?? undefined) : null;
+---
+{items.length > 0 && (
+<section class="fp" id={anchor} data-nav-label={navLabel} data-fp aria-labelledby={`${anchor}-t`}>
+  <div class="fp__pin" data-fp-pin>
+    <div class="fp__track" data-fp-track>
+      <header class="fp__intro">
+        <p class="label muted fp__meta">
+          {index !== undefined && <span class="tabular">({pad(index)})</span>}
+          <span>{f.eyebrow}</span>
+        </p>
+        <Headline lines={f.title} size="xxl" id={`${anchor}-t`} />
+        <p class="prose" data-reveal="fade">{f.intro}</p>
+        {cta && f.cta && <div data-reveal="fade"><Button href={cta} label={f.cta.label} /></div>}
+        <p class="label subtle fp__hint" aria-hidden="true">
+          <span>{pad(items.length)} projetos</span><Arrow />
+        </p>
+      </header>
+
+      {items.map((p, i) => {
+        const href = projectHref(p.slug);
+        const Tag = href ? 'a' : 'div';
+        return (
+          <article class="fp__item" data-project style={`--i:${i}`}>
+            <Tag href={href ?? undefined} class="fp__link" data-project-link={href ? '' : undefined}>
+              <div class="fp__media-wrap">
+                <div data-vt-media class="fp__vt">
+                  <Media src={p.cover} alt={p.coverAlt} sizes="(min-width: 900px) 62vw, 100vw" class="fp__media" slats={5} />
+                </div>
+                <span class="fp__num display" aria-hidden="true">{pad(i + 1)}</span>
+              </div>
+              <div class="fp__caption">
+                <div>
+                  <p class="label muted">{p.category} · {p.status}</p>
+                  <h3 class="display t-lg fp__name">{p.name}</h3>
+                </div>
+                <dl class="fp__specs label">
+                  <div><dt class="subtle">{content.ui.location}</dt><dd>{p.location.city}, {p.location.region}</dd></div>
+                  <div><dt class="subtle">{content.ui.year}</dt><dd>{p.year}</dd></div>
+                  <div><dt class="subtle">{content.ui.area}</dt><dd>{p.area}</dd></div>
+                </dl>
+              </div>
+            </Tag>
+          </article>
+        );
+      })}
+    </div>
+    <div class="fp__progress" aria-hidden="true"><i data-fp-progress></i></div>
+  </div>
+</section>
+)}
+
+<style>
+  .fp {
+    position: relative;
+    padding-block: var(--layout-section-space);
+  }
+  .fp__track {
+    display: grid;
+    gap: clamp(4rem, 10vw, 7rem);
+    padding-inline: var(--layout-margin);
+  }
+  .fp__intro {
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .fp__meta {
+    display: flex;
+    gap: 1rem;
+  }
+  .fp__hint {
+    display: none;
+    gap: 1rem;
+    align-items: center;
+  }
+  .fp__link {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .fp__media-wrap {
+    position: relative;
+  }
+  .fp__vt {
+    overflow: hidden;
+  }
+  .fp__vt :global(.fp__media) {
+    aspect-ratio: 16 / 10;
+  }
+  .fp__vt :global(img) {
+    transition: transform 1.4s var(--motion-ease-out);
+  }
+  .fp__link:hover .fp__vt :global(img),
+  .fp__link:focus-visible .fp__vt :global(img) {
+    transform: scale(1.045);
+  }
+  .fp__num {
+    position: absolute;
+    top: -0.42em;
+    right: 0.1em;
+    z-index: 4;
+    font-size: clamp(4rem, 12vw, 11rem);
+    line-height: 1;
+    color: var(--color-ink);
+    pointer-events: none;
+  }
+  .fp__caption {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .fp__name {
+    margin-top: 0.4rem;
+  }
+  .fp__specs {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .fp__specs dd {
+    margin-top: 0.25rem;
+  }
+  .fp__progress {
+    display: none;
+  }
+
+  /* Horizontal mode (enabled by script) */
+  :global(.fp.is-horizontal) .fp__pin {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  :global(.fp.is-horizontal) {
+    padding-block: 0;
+  }
+  :global(.fp.is-horizontal) .fp__track {
+    display: flex;
+    align-items: center;
+    gap: clamp(3rem, 6vw, 7rem);
+    width: max-content;
+    will-change: transform;
+  }
+  :global(.fp.is-horizontal) .fp__intro {
+    width: min(34vw, 36rem);
+    flex: none;
+  }
+  :global(.fp.is-horizontal) .fp__intro :global(.display) {
+    font-size: var(--type-xl);
+  }
+  :global(.fp.is-horizontal) .fp__hint {
+    display: flex;
+  }
+  :global(.fp.is-horizontal) .fp__item {
+    flex: none;
+    width: min(60vw, 64rem);
+  }
+  :global(.fp.is-horizontal) .fp__item:nth-of-type(even) {
+    width: min(44vw, 46rem);
+    align-self: flex-end;
+    margin-bottom: 4vh;
+  }
+  :global(.fp.is-horizontal) .fp__item:nth-of-type(even) .fp__vt :global(.fp__media) {
+    aspect-ratio: 4 / 3;
+  }
+  :global(.fp.is-horizontal) .fp__vt :global(.fp__media) {
+    max-height: 58vh;
+    width: 100%;
+  }
+  :global(.fp.is-horizontal) .fp__caption {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  :global(.fp.is-horizontal) .fp__progress {
+    display: block;
+    position: absolute;
+    left: var(--layout-margin);
+    right: var(--layout-margin);
+    bottom: 2.5rem;
+    height: 1px;
+    background: var(--color-line);
+  }
+  :global(.fp.is-horizontal) .fp__progress i {
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  @media (min-width: 700px) {
+    .fp__caption {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, ScrollTrigger, motionOk } from '../scripts/motion/core';
+
+  document.querySelectorAll<HTMLElement>('[data-fp]').forEach((section) => {
+    if (!motionOk()) return;
+    const pin = section.querySelector<HTMLElement>('[data-fp-pin]')!;
+    const track = section.querySelector<HTMLElement>('[data-fp-track]')!;
+    const bar = section.querySelector<HTMLElement>('[data-fp-progress]');
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 900px) and (min-height: 560px)', () => {
+      section.classList.add('is-horizontal');
+      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const tween = gsap.to(track, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: pin,
+          start: 'top top',
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onUpdate: (st) => bar && gsap.set(bar, { scaleX: st.progress }),
+        },
+      });
+      // Images drift inside their frames while travelling.
+      track.querySelectorAll<HTMLElement>('.fp__vt img').forEach((img) => {
+        gsap.fromTo(img, { xPercent: -6, scale: 1.12 }, {
+          xPercent: 6,
+          ease: 'none',
+          scrollTrigger: { trigger: img.closest('.fp__item'), containerAnimation: tween, start: 'left right', end: 'right left', scrub: true },
+        });
+      });
+      ScrollTrigger.refresh();
+      return () => section.classList.remove('is-horizontal');
+    });
+  });
+</script>

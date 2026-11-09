@@ -1,0 +1,384 @@
+---
+/**
+ * (17) 3D architectural experience — optional and self-contained.
+ * Three.js is only downloaded when the stage approaches the viewport
+ * (or after a tap on touch devices). The fallback image is always present.
+ */
+import Media from '../components/Media.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import { activeTheme } from '../lib/theme';
+import type { SectionProps } from '../lib/section';
+
+interface Props extends SectionProps {
+  modelUrl?: string | null;
+}
+const { anchor, navLabel, index, modelUrl } = Astro.props;
+const x = content.experience3d;
+const cfg = site.experience3d;
+const model = modelUrl ?? (cfg.source === 'gltf' ? cfg.modelUrl : null);
+const L = x.labels;
+---
+<section class="x3 section" id={anchor} data-nav-label={navLabel} data-x3
+  data-floors={x.totalFloors}
+  data-model={model ?? undefined}
+  data-accent={activeTheme().color.accent}
+  data-tap={String(cfg.tapToStartOnMobile)}
+  aria-labelledby={`${anchor}-t`}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={x.eyebrow} title={x.title} intro={x.intro} id={`${anchor}-t`} />
+  </div>
+
+  <div class="x3__stage" data-x3-stage data-state="idle">
+    <Media src={cfg.fallbackImage} alt="Composição arquitetônica demonstrativa — imagem estática" sizes="100vw" class="x3__fallback" />
+    <div class="x3__canvas" data-x3-canvas></div>
+
+    <div class="x3__status label" aria-live="polite">
+      <span class="x3__loading" data-x3-loading><i></i>{L.loading}</span>
+      <span class="x3__error" data-x3-error>{L.error}</span>
+    </div>
+
+    <button type="button" class="x3__start btn btn--solid" data-x3-start>
+      <span>{L.start}</span>
+    </button>
+
+    <div class="x3__ui" data-x3-ui>
+      <div class="x3__bar" role="toolbar" aria-label="Controles da experiência 3D">
+        <div class="x3__group" role="group" aria-label="Vistas">
+          {(['facade', 'aerial', 'street'] as const).map((v, i) => (
+            <button type="button" class="label x3__chip" data-x3-view={v} aria-pressed={i === 0 ? 'true' : 'false'}>{L.views[v]}</button>
+          ))}
+        </div>
+        <div class="x3__group" role="group" aria-label="Iluminação">
+          <button type="button" class="label x3__chip" data-x3-night aria-pressed="false">
+            <span class="x3__dn"><span>{L.day}</span><span>{L.night}</span></span>
+          </button>
+          <button type="button" class="label x3__chip" data-x3-explode aria-pressed="false" data-needs-floors>{L.explode}</button>
+        </div>
+      </div>
+
+      <div class="x3__floors" data-needs-floors>
+        <p class="label subtle">{L.floors}</p>
+        <ul>
+          {x.floors.map((f) => (
+            <li>
+              <button type="button" class="x3__floor" data-x3-floor={`${f.from}-${f.to}`} aria-pressed="false">
+                <span class="label tabular subtle">{String(f.from).padStart(2, '0')}–{String(f.to).padStart(2, '0')}</span>
+                <span>{f.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <p class="x3__floor-text muted t-small" data-x3-floor-text aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <p class="label subtle x3__note">Arraste para girar · role ou pince para aproximar · composição arquitetônica demonstrativa</p>
+  </div>
+  <script type="application/json" data-x3-floors-data set:html={JSON.stringify(x.floors)} />
+</section>
+
+<style>
+  .x3__stage {
+    position: relative;
+    height: min(88svh, 60rem);
+    min-height: 32rem;
+    margin-inline: var(--layout-margin);
+    overflow: hidden;
+    background: var(--color-surface);
+    color: #f3eee6;
+  }
+  .x3__stage :global(.x3__fallback) {
+    position: absolute;
+    inset: 0;
+    transition: opacity 1.2s var(--motion-ease-out);
+  }
+  .x3__canvas {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s var(--motion-ease-out);
+    touch-action: pan-y;
+  }
+  .x3__canvas :global(canvas) {
+    width: 100% !important;
+    height: 100% !important;
+    cursor: grab;
+  }
+  .x3__canvas :global(canvas:active) {
+    cursor: grabbing;
+  }
+  [data-state='ready'] .x3__canvas {
+    opacity: 1;
+  }
+  [data-state='ready'] :global(.x3__fallback) {
+    opacity: 0;
+  }
+  .x3__status {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    z-index: 3;
+  }
+  .x3__loading,
+  .x3__error {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    background: rgba(10, 9, 8, 0.6);
+    backdrop-filter: blur(8px);
+  }
+  .x3__loading i {
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+    animation: x3-load 1.2s ease-in-out infinite;
+    transform-origin: left;
+  }
+  @keyframes x3-load {
+    0% { transform: scaleX(0); }
+    50% { transform: scaleX(1); transform-origin: left; }
+    51% { transform-origin: right; }
+    100% { transform: scaleX(0); transform-origin: right; }
+  }
+  [data-state='loading'] .x3__loading,
+  [data-state='error'] .x3__error {
+    display: inline-flex;
+  }
+  .x3__start {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    --btn-bg: #f3eee6;
+    --btn-ink: #121110;
+  }
+  [data-state='await-tap'] .x3__start {
+    display: inline-flex;
+  }
+  .x3__ui {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 3;
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity 0.8s, transform 0.8s var(--motion-ease-out);
+  }
+  [data-state='ready'] .x3__ui {
+    opacity: 1;
+    transform: none;
+  }
+  .x3__ui > * {
+    pointer-events: auto;
+  }
+  .x3__bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+  .x3__group {
+    display: flex;
+    gap: 1px;
+    background: rgba(243, 238, 230, 0.15);
+    backdrop-filter: blur(10px);
+  }
+  .x3__chip {
+    padding: 0.75rem 0.9rem;
+    background: rgba(10, 9, 8, 0.55);
+    transition: background 0.3s, color 0.3s;
+  }
+  .x3__chip[aria-pressed='true'] {
+    background: #f3eee6;
+    color: #121110;
+  }
+  .x3__dn span + span {
+    display: none;
+  }
+  [aria-pressed='true'] .x3__dn span:first-child {
+    display: none;
+  }
+  [aria-pressed='true'] .x3__dn span + span {
+    display: inline;
+  }
+  .x3__floors {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(10, 9, 8, 0.55);
+    backdrop-filter: blur(10px);
+    max-width: 22rem;
+  }
+  .x3__floors ul {
+    display: grid;
+  }
+  .x3__floor {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    width: 100%;
+    padding: 0.55rem 0;
+    text-align: left;
+    border-top: 1px solid rgba(243, 238, 230, 0.15);
+    transition: color 0.3s;
+  }
+  .x3__floor[aria-pressed='true'],
+  .x3__floor:hover {
+    color: var(--color-accent);
+  }
+  .x3__floor-text:empty {
+    display: none;
+  }
+  .x3__note {
+    margin-top: 1rem;
+  }
+  [data-hide-floors] [data-needs-floors] {
+    display: none !important;
+  }
+  @media (max-width: 899px) {
+    .x3__stage {
+      height: 80svh;
+    }
+    .x3__floors {
+      max-width: none;
+    }
+    .x3__floors ul {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 1rem;
+    }
+    .x3__floor {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (min-width: 900px) {
+    .x3__ui {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      padding: 1.5rem;
+    }
+    .x3__floors {
+      grid-row: 1;
+      grid-column: 2;
+      width: 20rem;
+    }
+    .x3__bar {
+      grid-row: 1;
+      grid-column: 1;
+      justify-content: flex-start;
+      align-self: end;
+    }
+  }
+</style>
+
+<script>
+  import { reducedMotion, isTouch } from '../scripts/motion/core';
+  import type { Viewer, ViewName } from '../scripts/three/architecture-viewer';
+
+  function webglAvailable() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(c.getContext('webgl2') || c.getContext('webgl'));
+    } catch {
+      return false;
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-x3]').forEach((root) => {
+    const stage = root.querySelector<HTMLElement>('[data-x3-stage]')!;
+    const mount = root.querySelector<HTMLElement>('[data-x3-canvas]')!;
+    const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+    const lowPower = isTouch() || (nav.deviceMemory ?? 8) < 4 || window.innerWidth < 900;
+    const floorsData: { from: number; to: number; label: string; text: string }[] = JSON.parse(
+      root.querySelector('[data-x3-floors-data]')?.textContent || '[]'
+    );
+
+    // No WebGL / very low memory → elegant static fallback only.
+    if (!webglAvailable() || (nav.deviceMemory ?? 8) < 2) {
+      stage.dataset.state = 'error';
+      return;
+    }
+
+    let viewer: Viewer | null = null;
+    const start = async () => {
+      if (viewer || stage.dataset.state === 'loading') return;
+      stage.dataset.state = 'loading';
+      try {
+        const { createViewer } = await import('../scripts/three/architecture-viewer');
+        viewer = await createViewer({
+          container: mount,
+          floors: Number(root.dataset.floors || 32),
+          accent: root.dataset.accent || '#c9a47c',
+          reducedMotion: reducedMotion(),
+          lowPower,
+          modelUrl: root.dataset.model || null,
+        });
+        if (!viewer.hasFloors) stage.setAttribute('data-hide-floors', '');
+        stage.dataset.state = 'ready';
+      } catch (err) {
+        console.warn('[3d] fallback:', err);
+        stage.dataset.state = 'error';
+      }
+    };
+
+    const needsTap = (lowPower && root.dataset.tap === 'true') || nav.connection?.saveData;
+    if (needsTap) {
+      stage.dataset.state = 'await-tap';
+      root.querySelector('[data-x3-start]')!.addEventListener('click', start);
+    } else {
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            io.disconnect();
+            start();
+          }
+        },
+        { rootMargin: '300px 0px' }
+      );
+      io.observe(stage);
+    }
+
+    /* UI wiring */
+    const views = root.querySelectorAll<HTMLButtonElement>('[data-x3-view]');
+    views.forEach((b) =>
+      b.addEventListener('click', () => {
+        views.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        viewer?.setView(b.dataset.x3View as ViewName);
+      })
+    );
+    const toggle = (sel: string, fn: (on: boolean) => void) => {
+      const b = root.querySelector<HTMLButtonElement>(sel);
+      b?.addEventListener('click', () => {
+        const on = b.getAttribute('aria-pressed') !== 'true';
+        b.setAttribute('aria-pressed', String(on));
+        fn(on);
+      });
+    };
+    toggle('[data-x3-night]', (on) => viewer?.setNight(on));
+    toggle('[data-x3-explode]', (on) => viewer?.setExploded(on));
+
+    const floorBtns = root.querySelectorAll<HTMLButtonElement>('[data-x3-floor]');
+    const floorText = root.querySelector<HTMLElement>('[data-x3-floor-text]')!;
+    floorBtns.forEach((b, i) =>
+      b.addEventListener('click', () => {
+        const on = b.getAttribute('aria-pressed') !== 'true';
+        floorBtns.forEach((o) => o.setAttribute('aria-pressed', String(o === b && on)));
+        const [a, z] = b.dataset.x3Floor!.split('-').map(Number);
+        viewer?.highlight(on ? [a, z] : null);
+        floorText.textContent = on ? floorsData[i]?.text ?? '' : '';
+        if (on) views.forEach((o) => o.setAttribute('aria-pressed', 'false'));
+      })
+    );
+
+    window.addEventListener('pagehide', (e) => {
+      if (!e.persisted) viewer?.dispose();
+    });
+  });
+</script>

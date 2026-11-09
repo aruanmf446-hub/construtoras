@@ -1,0 +1,123 @@
+---
+/** (11) Technology & innovation — blueprint grid, annotated image, coded capability list. */
+import Media from '../components/Media.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const t = content.technology;
+// Annotation anchor points (percentages) over the image.
+const pins = [
+  { x: 22, y: 30 },
+  { x: 64, y: 22 },
+  { x: 40, y: 62 },
+  { x: 76, y: 70 },
+];
+---
+<section class="tc section" id={anchor} data-nav-label={navLabel} aria-label={t.eyebrow}>
+  <div class="tc__blueprint" aria-hidden="true"></div>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={t.eyebrow} title={t.title} intro={t.intro} />
+    <div class="tc__grid">
+      {t.image && (
+        <figure class="tc__figure">
+          <Media src={t.image.src} alt={t.image.alt} sizes="(min-width: 900px) 50vw, 100vw" reveal="mask" class="tc__img" />
+          {t.items.slice(0, pins.length).map((it, i) => (
+            <span class="tc__pin label" style={`left:${pins[i].x}%;top:${pins[i].y}%`} aria-hidden="true" data-reveal="fade">
+              <i></i>{it.code}
+            </span>
+          ))}
+          <figcaption class="label subtle">Fig. — {t.image.alt.replace(/\s*\(.*\)$/, '')}</figcaption>
+        </figure>
+      )}
+      <ul class="tc__list">
+        {t.items.map((it, i) => (
+          <li class="tc__item" data-reveal="fade">
+            <span class="label tc__code">{pad(i + 1)} · {it.code}</span>
+            <h3 class="t-md">{it.title}</h3>
+            <p class="muted">{it.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tc {
+    overflow: clip;
+    background: var(--color-bg-alt);
+  }
+  .tc__blueprint {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.6;
+    background-image:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size: 96px 96px;
+    mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%);
+  }
+  .tc .container {
+    position: relative;
+  }
+  .tc__grid {
+    display: grid;
+    gap: 3rem var(--layout-gutter);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .tc__figure {
+    grid-column: 1 / -1;
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .tc__figure :global(.tc__img) {
+    aspect-ratio: 4 / 5;
+  }
+  .tc__pin {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .tc__pin i {
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+  .tc__list {
+    grid-column: 1 / -1;
+    display: grid;
+    align-content: start;
+  }
+  .tc__item {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1.6rem 0;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .tc__code {
+    color: var(--color-accent);
+  }
+  @media (min-width: 900px) {
+    .tc__figure {
+      grid-column: 1 / span 6;
+    }
+    .tc__list {
+      grid-column: 8 / -1;
+    }
+  }
+</style>

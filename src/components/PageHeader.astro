@@ -1,0 +1,62 @@
+---
+/** Header for inner pages (projects, about, contact, 404). */
+import Headline from './Headline.astro';
+import Media from './Media.astro';
+import type { PageHeader as Header } from '../content/schema';
+
+interface Props {
+  header: Header;
+  /** Extra line under the intro (e.g. breadcrumbs). */
+  crumbs?: { label: string; href?: string }[];
+}
+const { header, crumbs = [] } = Astro.props;
+---
+<header class:list={['ph', header.image && 'ph--media']} data-intro-page>
+  <div class="container ph__inner">
+    {crumbs.length > 0 && (
+      <nav aria-label="Trilha" class="ph__crumbs label subtle">
+        <ol>
+          {crumbs.map((c, i) => (
+            <li>{c.href ? <a class="link-u" href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}{i < crumbs.length - 1 && <span aria-hidden="true"> / </span>}</li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    <p class="label muted">{header.eyebrow}</p>
+    <Headline lines={header.title} as="h1" size="xxl" />
+    <p class="lead ph__intro" data-reveal="fade">{header.intro}</p>
+  </div>
+  {header.image && (
+    <div class="ph__media container">
+      <Media src={header.image.src} alt={header.image.alt} sizes="100vw" priority parallax={0.16} slats={7} class="ph__img" />
+    </div>
+  )}
+</header>
+
+<style>
+  .ph {
+    padding-top: clamp(9rem, 18vw, 15rem);
+  }
+  .ph__inner {
+    display: grid;
+    gap: 2rem;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .ph__crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .ph__intro {
+    max-width: 38ch;
+  }
+  .ph__media :global(.ph__img) {
+    aspect-ratio: 21 / 9;
+    min-height: 50vh;
+  }
+  @media (min-width: 900px) {
+    .ph__intro {
+      margin-left: 50%;
+    }
+  }
+</style>

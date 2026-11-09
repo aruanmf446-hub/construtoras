@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Button from '../components/Button.astro';
+import { content } from '../content';
+import { linesToText } from '../lib/text';
+import { pageHref } from '../lib/routes';
+
+const h = content.pages.notFound;
+---
+<BaseLayout page={null} title={linesToText(h.title)} description={h.intro} noindex>
+  <PageHeader header={h} />
+  <div class="container nf">
+    <Button href="/" label={content.ui.backHome} variant="solid" />
+    <Button href={pageHref('projects')} label={content.ui.allProjects} />
+  </div>
+</BaseLayout>
+<style>
+  .nf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-bottom: var(--layout-section-space);
+  }
+</style>

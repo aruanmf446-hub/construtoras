@@ -1,0 +1,25 @@
+---
+import Headline from './Headline.astro';
+import { pad } from '../lib/text';
+
+interface Props {
+  index?: number;
+  eyebrow: string;
+  title: string[];
+  intro?: string;
+  size?: 'xxl' | 'xl' | 'lg';
+  id?: string;
+  class?: string;
+}
+const { index, eyebrow, title, intro, size = 'xl', id, class: cls = '' } = Astro.props;
+---
+<header class:list={['sh', cls]}>
+  <div class="sh__meta label">
+    {index !== undefined && <span class="tabular">({pad(index)})</span>}
+    <span>{eyebrow}</span>
+    <hr class="rule" data-reveal="draw" />
+  </div>
+  <Headline lines={title} size={size} class="sh__title" id={id} />
+  {intro && <p class="sh__intro prose" data-reveal="fade">{intro}</p>}
+  <slot />
+</header>

@@ -1,0 +1,19 @@
+---
+/** Display headline built from explicit lines. `*word*` sets the accent serif. */
+import { accent } from '../lib/text';
+
+interface Props {
+  lines: string[];
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+  size?: 'mega' | 'xxl' | 'xl' | 'lg';
+  class?: string;
+  reveal?: boolean;
+  id?: string;
+}
+const { lines, as: Tag = 'h2', size = 'xl', class: cls = '', reveal = true, id } = Astro.props;
+---
+<Tag id={id} class:list={['display', `t-${size}`, cls]} data-reveal={reveal ? 'lines' : undefined}>
+  {lines.map((l) => (
+    <span class="line"><span class="line__inner" set:html={accent(l)} /></span>
+  ))}
+</Tag>

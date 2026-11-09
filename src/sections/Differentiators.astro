@@ -1,0 +1,90 @@
+---
+/** (13) Constructive differentiators — outlined numerals on an editorial hairline grid. */
+import SectionHeader from '../components/SectionHeader.astro';
+import { content } from '../content';
+import { pad } from '../lib/text';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const d = content.differentiators;
+---
+{d.items.length > 0 && (
+<section class="df section" id={anchor} data-nav-label={navLabel} aria-label={d.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={d.eyebrow} title={d.title} intro={d.intro} />
+    <ol class="df__grid">
+      {d.items.map((it, i) => (
+        <li class="df__item" data-reveal="fade">
+          <span class="df__num display" aria-hidden="true">{pad(i + 1)}</span>
+          <div class="df__text">
+            <h3 class="t-md">{it.title}</h3>
+            <p class="muted">{it.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+)}
+
+<style>
+  .df__grid {
+    display: grid;
+    border-top: var(--shape-border) solid var(--color-line);
+  }
+  .df__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: var(--shape-border) solid var(--color-line);
+    align-items: start;
+  }
+  .df__item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s var(--motion-ease-out);
+  }
+  .df__item:hover::after {
+    transform: scaleX(1);
+  }
+  .df__num {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-ink-subtle);
+    transition: color 0.5s, -webkit-text-stroke-color 0.5s;
+  }
+  .df__item:hover .df__num {
+    color: var(--color-accent);
+    -webkit-text-stroke-color: var(--color-accent);
+  }
+  .df__text {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 40ch;
+  }
+  @media (min-width: 900px) {
+    .df__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: calc(var(--layout-gutter) * 3);
+    }
+    /* subtle stagger to break the grid */
+    .df__item:nth-child(even) {
+      margin-top: 4rem;
+      margin-bottom: -4rem;
+    }
+    .df__grid {
+      padding-bottom: 4rem;
+    }
+  }
+</style>

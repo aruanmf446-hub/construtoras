@@ -1,0 +1,138 @@
+---
+/** (18) Testimonials & cases — one large quote at a time, stacked in a single grid cell (no layout shift). */
+import SectionHeader from '../components/SectionHeader.astro';
+import { site } from '../config/site.config';
+import { content } from '../content';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const t = content.testimonials;
+const n = t.items.length;
+---
+{n > 0 && (
+<section class="ts section section--alt" id={anchor} data-nav-label={navLabel} data-ts aria-roledescription="carrossel" aria-label={t.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={t.eyebrow} title={t.title} size="lg" />
+    <div class="ts__stage">
+      <span class="ts__mark accent" aria-hidden="true">“</span>
+      <div class="ts__slides">
+        {t.items.map((it, i) => (
+          <figure class:list={['ts__slide', i === 0 && 'is-active']} data-ts-slide aria-hidden={i === 0 ? undefined : 'true'}>
+            <blockquote class="ts__quote">{it.quote}</blockquote>
+            <figcaption class="ts__who">
+              <span class="t-md">{it.author}</span>
+              <span class="label muted">{it.role}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      {n > 1 && (
+        <div class="ts__nav">
+          <button type="button" class="label ts__btn" data-ts-prev aria-label="Depoimento anterior">←</button>
+          <span class="label tabular" aria-live="polite"><span data-ts-index>01</span> / {String(n).padStart(2, '0')}</span>
+          <button type="button" class="label ts__btn" data-ts-next aria-label="Próximo depoimento">→</button>
+        </div>
+      )}
+    </div>
+    {site.demo && t.note && <p class="demo-note label">{t.note}</p>}
+  </div>
+</section>
+)}
+
+<style>
+  .ts__stage {
+    position: relative;
+    display: grid;
+    gap: 2.5rem;
+  }
+  .ts__mark {
+    font-size: clamp(8rem, 18vw, 16rem);
+    line-height: 0.6;
+    color: var(--color-accent);
+    height: 0.45em;
+  }
+  .ts__slides {
+    display: grid;
+  }
+  .ts__slide {
+    grid-area: 1 / 1;
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(1.5rem);
+    transition: opacity 0.8s var(--motion-ease-out), transform 1s var(--motion-ease-out), visibility 0.8s;
+  }
+  .ts__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .ts__quote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.7rem, 3.4vw, 3.4rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    max-width: 28ch;
+  }
+  .ts__who {
+    display: grid;
+    gap: 0.35rem;
+    padding-top: 1rem;
+    border-top: var(--shape-border) solid var(--color-line);
+    max-width: 28rem;
+  }
+  .ts__nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .ts__btn {
+    width: 3rem;
+    height: 3rem;
+    border: var(--shape-border) solid var(--color-line);
+    font-size: 1rem;
+    transition: background 0.3s, color 0.3s;
+  }
+  .ts__btn:hover {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+  @media (min-width: 900px) {
+    .ts__stage {
+      grid-template-columns: 2fr 10fr;
+      column-gap: var(--layout-gutter);
+    }
+    .ts__nav {
+      grid-column: 2;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ts]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-ts-slide]'));
+    const idx = root.querySelector<HTMLElement>('[data-ts-index]');
+    let i = 0;
+    const go = (n: number) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        s.classList.toggle('is-active', k === i);
+        if (k === i) s.removeAttribute('aria-hidden');
+        else s.setAttribute('aria-hidden', 'true');
+      });
+      if (idx) idx.textContent = String(i + 1).padStart(2, '0');
+    };
+    root.querySelector('[data-ts-prev]')?.addEventListener('click', () => go(i - 1));
+    root.querySelector('[data-ts-next]')?.addEventListener('click', () => go(i + 1));
+    // swipe
+    let x0 = 0;
+    root.addEventListener('pointerdown', (e) => (x0 = e.clientX));
+    root.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 60 && (e.pointerType === 'touch')) go(i + (dx < 0 ? 1 : -1));
+    });
+  });
+</script>

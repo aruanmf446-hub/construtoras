@@ -1,0 +1,132 @@
+---
+/** (10) Timeline — a progress spine draws itself as the years pass by. */
+import SectionHeader from '../components/SectionHeader.astro';
+import { content } from '../content';
+import type { SectionProps } from '../lib/section';
+
+type Props = SectionProps;
+const { anchor, navLabel, index } = Astro.props;
+const t = content.timeline;
+---
+{t.items.length > 0 && (
+<section class="tl section section--alt" id={anchor} data-nav-label={navLabel} data-tl aria-label={t.eyebrow}>
+  <div class="container">
+    <SectionHeader index={index} eyebrow={t.eyebrow} title={t.title} size="xl" />
+    <ol class="tl__list">
+      <span class="tl__spine" aria-hidden="true"><i data-tl-progress></i></span>
+      {t.items.map((it) => (
+        <li class="tl__item" data-tl-item>
+          <span class="tl__dot" aria-hidden="true"></span>
+          <p class="tl__year display tabular">{it.year}</p>
+          <div class="tl__body" data-reveal="fade">
+            <h3 class="t-md">{it.title}</h3>
+            <p class="muted">{it.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+)}
+
+<style>
+  .tl__list {
+    position: relative;
+    display: grid;
+  }
+  .tl__spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-line);
+  }
+  .tl__spine i {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform-origin: top;
+    transform: scaleY(var(--p, 1));
+  }
+  .tl__item {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: 2rem 0 2rem 1.75rem;
+    border-bottom: var(--shape-border) solid var(--color-line);
+  }
+  .tl__dot {
+    position: absolute;
+    left: -4px;
+    top: 2.9rem;
+    width: 9px;
+    height: 9px;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-accent);
+    transition: background 0.4s;
+  }
+  .tl__item.is-past .tl__dot {
+    background: var(--color-accent);
+  }
+  .tl__year {
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    line-height: 0.9;
+    color: var(--color-ink-subtle);
+    transition: color 0.6s;
+  }
+  .tl__item.is-past .tl__year {
+    color: var(--color-ink);
+  }
+  .tl__body {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 44ch;
+  }
+  @media (min-width: 900px) {
+    .tl__spine {
+      left: 50%;
+    }
+    .tl__item {
+      grid-template-columns: 1fr 1fr;
+      gap: 0 calc(var(--layout-gutter) * 4);
+      padding-left: 0;
+      align-items: center;
+    }
+    .tl__dot {
+      left: calc(50% - 4px);
+      top: 50%;
+    }
+    .tl__year {
+      text-align: right;
+    }
+  }
+</style>
+
+<script>
+  import { ScrollTrigger, motionOk } from '../scripts/motion/core';
+  document.querySelectorAll<HTMLElement>('[data-tl]').forEach((root) => {
+    const bar = root.querySelector<HTMLElement>('[data-tl-progress]');
+    const items = root.querySelectorAll<HTMLElement>('[data-tl-item]');
+    if (!motionOk()) {
+      items.forEach((i) => i.classList.add('is-past'));
+      return;
+    }
+    const list = root.querySelector('.tl__list')!;
+    ScrollTrigger.create({
+      trigger: list,
+      start: 'top 60%',
+      end: 'bottom 60%',
+      onUpdate: (st) => bar?.style.setProperty('--p', st.progress.toFixed(3)),
+      onRefresh: (st) => bar?.style.setProperty('--p', st.progress.toFixed(3)),
+    });
+    items.forEach((item) =>
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 60%',
+        onEnter: () => item.classList.add('is-past'),
+        onLeaveBack: () => item.classList.remove('is-past'),
+      })
+    );
+  });
+</script>

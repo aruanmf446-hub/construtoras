@@ -1,0 +1,24 @@
+---
+import Arrow from './Arrow.astro';
+
+interface Props {
+  href: string | null;
+  label: string;
+  variant?: 'outline' | 'solid';
+  class?: string;
+  external?: boolean;
+}
+const { href, label, variant = 'outline', class: cls = '', external } = Astro.props;
+const isExternal = external ?? (href ? /^https?:\/\//.test(href) : false);
+---
+{href && (
+  <a
+    href={href}
+    class:list={['btn', variant === 'solid' && 'btn--solid', cls]}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+  >
+    <span>{label}</span>
+    <Arrow direction={isExternal ? 'up-right' : 'right'} />
+  </a>
+)}
