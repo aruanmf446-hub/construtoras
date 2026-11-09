@@ -42,7 +42,7 @@ export const projects: Project[] = [
   {
     slug: 'torre-halden-norte',
     name: 'Torre Halden Norte',
-    tagline: 'Residencial vertical com fachada de brises em bronze',
+    tagline: 'Condomínio vertical com apartamentos, terraços e coberturas',
     category: 'Residencial',
     status: 'Lançamento',
     year: '2027',
@@ -52,10 +52,10 @@ export const projects: Project[] = [
     coverPortrait: 'demo/hero-tower-portrait.jpg',
     coverAlt: 'Torre com lajes horizontais e brises verticais em bronze ao entardecer (imagem demonstrativa)',
     summary:
-      'Torre residencial de 42 pavimentos em São Paulo, com varandas contínuas protegidas por brises de alumínio em tom bronze.',
+      'Condomínio residencial de 42 pavimentos em São Paulo, com varandas contínuas protegidas por brises de alumínio em tom bronze.',
     story: [
       { title: 'Conceito', text: 'Varandas contínuas de 3 metros criam espaço para estar e receber ao ar livre. Brises verticais de alumínio em tom bronze filtram o sol da tarde.' },
-      { title: 'Implantação', text: 'Os jardins ocupam 60% do terreno. Uma praça faz a transição entre a rua e o hall de entrada com pé-direito duplo.' },
+      { title: 'Implantação', text: 'Os jardins do condomínio ocupam 60% do terreno. Uma praça faz a transição entre a rua e o hall de entrada com pé-direito duplo.' },
       { title: 'Interiores', text: 'Os apartamentos tipo têm plantas de 180 a 240 m², com três ou quatro suítes. A posição dos pilares nas bordas da planta permite diferentes arranjos dos ambientes internos.' },
     ],
     specs: [
@@ -85,7 +85,7 @@ export const projects: Project[] = [
   {
     slug: 'residencial-brise',
     name: 'Residencial Brise',
-    tagline: 'Brises móveis de madeira para controle solar',
+    tagline: 'Condomínio de 36 apartamentos com brises móveis de madeira',
     category: 'Residencial',
     status: 'Em obras',
     year: '2026',
@@ -93,7 +93,7 @@ export const projects: Project[] = [
     area: '14.200 m²',
     cover: 'demo/residence-louvers.jpg',
     coverAlt: 'Edifício residencial de nove pavimentos com brises de madeira (imagem demonstrativa)',
-    summary: 'Edifício residencial de nove pavimentos em Curitiba, com painéis deslizantes de madeira para regular luz e privacidade.',
+    summary: 'Condomínio residencial de 36 apartamentos em Curitiba, com nove pavimentos e painéis deslizantes de madeira para regular luz e privacidade.',
     story: [
       { title: 'Envoltória ativa', text: 'Os painéis de madeira deslizam diante das aberturas. Cada morador pode ajustar o sombreamento e a privacidade dos ambientes.' },
       { title: 'Lajes deslocadas', text: 'As lajes alternam sua posição entre os pavimentos. Esse deslocamento cria varandas sombreadas e marca as linhas horizontais da fachada.' },

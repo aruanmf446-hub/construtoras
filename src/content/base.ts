@@ -10,10 +10,10 @@ import type { SiteContent } from './schema';
 
 export const base: SiteContent = {
   hero: {
-    eyebrow: 'Nome da sua incorporadora aqui',
-    title: ['Arquitetura', 'que *permanece*'],
+    eyebrow: 'Nome da sua construtora aqui',
+    title: ['Construção', 'em diferentes *escalas*'],
     subtitle:
-      'Residências com varandas amplas, luz natural e plantas que permitem diferentes formas de morar.',
+      'Condomínios residenciais, edifícios comerciais, hotéis e complexos industriais. Desenvolvimento e construção, do estudo do terreno à entrega.',
     primary: { label: 'Ver empreendimentos', to: 'projects' },
     secondary: { label: 'Fale conosco', to: 'contact' },
     meta: [
@@ -27,17 +27,17 @@ export const base: SiteContent = {
   manifesto: {
     eyebrow: 'Manifesto',
     statement:
-      'Escolher onde morar é pensar em como você quer passar os seus dias. Na luz da sala, no espaço para receber e na privacidade dos quartos. Nossos projetos começam nessas escolhas e tomam forma na planta, nos materiais e na relação com a rua.',
-    signature: 'Nome do responsável aqui · Arquitetura',
+      'Um condomínio precisa conciliar privacidade, circulação e áreas comuns. Uma sede corporativa depende de espaços adequados às equipes. Um complexo logístico exige acessos e instalações para a operação. Cada projeto começa pelo entendimento de quem vai utilizá-lo.',
+    signature: 'Nome do responsável aqui · Construção e Incorporação',
   },
 
   aboutIntro: {
     eyebrow: 'A empresa',
-    title: ['Quem constrói', 'seu *endereço*'],
-    lead: 'A Halden reúne incorporação e construção para acompanhar cada empreendimento da escolha do terreno à entrega das chaves.',
+    title: ['Da incorporação', 'à *construção*'],
+    lead: 'A Halden desenvolve e constrói empreendimentos residenciais e comerciais, além de executar projetos corporativos, industriais e de infraestrutura.',
     body: [
-      'Arquitetos e engenheiros trabalham juntos para que a planta, a estrutura e os acabamentos atendam ao uso dos espaços.',
-      'Durante a construção, o cliente acompanha o andamento por relatórios e visitas técnicas programadas. Após a entrega, conta com assistência técnica e orientações de manutenção.',
+      'O trabalho reúne estudos do terreno, coordenação de projetos e execução. Implantação, acessos, estrutura e instalações são definidos conforme o uso de cada empreendimento.',
+      'Durante a construção, relatórios e visitas técnicas permitem acompanhar as etapas. A entrega inclui orientações de uso e manutenção, com assistência técnica para proprietários e responsáveis pela operação.',
     ],
     image: { src: 'demo/detail-fins.jpg', alt: 'Detalhe de fachada com brises verticais em bronze (imagem demonstrativa)' },
     imageSecondary: { src: 'demo/detail-concrete.jpg', alt: 'Interior em concreto aparente com luz zenital (imagem demonstrativa)' },
@@ -51,15 +51,15 @@ export const base: SiteContent = {
 
   featuredProjects: {
     eyebrow: 'Projetos selecionados',
-    title: ['Conheça nossos', '*endereços*'],
-    intro: 'De apartamentos com varandas contínuas a uma casa em balanço: conheça os projetos e veja como cada um organiza seus espaços.',
+    title: ['Projetos em', '*destaque*'],
+    intro: 'Condomínios verticais, uma residência e uma sede corporativa: conheça as soluções de implantação, estrutura e uso dos espaços nesta seleção.',
     slugs: ['torre-halden-norte', 'residencial-brise', 'casa-espelho', 'sede-atlas'],
     cta: { label: 'Todos os projetos', to: 'projects' },
   },
 
   portfolio: {
     eyebrow: 'Portfólio',
-    title: ['Escolha o que', 'quer *conhecer*'],
+    title: ['Explore por', '*segmento*'],
     intro: 'Explore por categoria e consulte localização, áreas e estágio de cada projeto.',
     allLabel: 'Todos',
   },
@@ -68,7 +68,7 @@ export const base: SiteContent = {
 
   services: {
     eyebrow: 'Especialidades',
-    title: ['Do terreno', 'à *chave*'],
+    title: ['Do planejamento', 'à *entrega*'],
     intro: 'Do estudo do terreno ao atendimento após a entrega, reunimos as equipes responsáveis por desenvolver e construir cada empreendimento.',
     items: [
       {
@@ -90,9 +90,9 @@ export const base: SiteContent = {
         image: { src: 'demo/infrastructure.jpg', alt: 'Viaduto em concreto sob névoa (imagem demonstrativa)' },
       },
       {
-        title: 'Arquitetura & Interiores',
-        description: 'Desenho dos ambientes, escolha de acabamentos e integração das áreas comuns ao conjunto.',
-        tags: ['Projeto', 'Materiais', 'Paisagismo'],
+        title: 'Coordenação de projetos',
+        description: 'Compatibilização de arquitetura, estrutura e instalações para atender ao uso e à operação de cada empreendimento.',
+        tags: ['Arquitetura', 'Instalações', 'Compatibilização'],
         image: { src: 'demo/detail-interior.jpg', alt: 'Sala com fachada envidraçada e forro de madeira (imagem demonstrativa)' },
       },
       {
@@ -189,12 +189,12 @@ export const base: SiteContent = {
     eyebrow: 'Diferenciais construtivos',
     title: ['O que faz', '*diferença*'],
     items: [
-      { title: 'Varandas para usar', text: 'Na Torre Halden Norte, varandas contínuas de 3 metros ampliam o espaço para estar e receber.' },
-      { title: 'Luz na medida', text: 'Brises e painéis móveis filtram a luz e ajudam a preservar a privacidade dos ambientes.' },
+      { title: 'Implantação e acessos', text: 'Entradas, circulação e ocupação do terreno são estudadas conforme o uso: residencial, comercial ou industrial.' },
+      { title: 'Áreas comuns e coletivas', text: 'Nos condomínios, jardins e espaços de convivência integram o conjunto. Nos edifícios corporativos, acessos e áreas compartilhadas organizam o uso pelas equipes.' },
       { title: 'Materiais e manutenção', text: 'A escolha de acabamentos considera o desgaste do uso e os cuidados necessários ao longo do tempo.' },
-      { title: 'Plantas flexíveis', text: 'Na Torre Halden Norte, pilares nas bordas da planta permitem diferentes arranjos para os ambientes internos.' },
+      { title: 'Espaços conforme o uso', text: 'Apartamentos, ambientes de trabalho e áreas operacionais têm exigências próprias. A distribuição dos espaços considera circulação, atividades e instalações.' },
       { title: 'Conforto acústico', text: 'A especificação de lajes e esquadrias considera os ruídos entre ambientes e os sons que vêm da rua.' },
-      { title: 'Acompanhamento da construção', text: 'Relatórios e visitas técnicas programadas permitem acompanhar as etapas antes da entrega das chaves.' },
+      { title: 'Acompanhamento da construção', text: 'Relatórios e visitas técnicas programadas permitem ao cliente acompanhar os serviços e as próximas etapas da execução.' },
     ],
   },
 
@@ -305,12 +305,12 @@ export const base: SiteContent = {
 
   contact: {
     eyebrow: 'Contato',
-    title: ['Qual é o seu', 'próximo *endereço*?'],
-    intro: 'Quer saber mais sobre um empreendimento? Conte qual chamou sua atenção e o que você procura em um imóvel. Nossa equipe pode orientar a consulta às áreas e características do projeto.',
+    title: ['Qual é o seu', 'próximo *projeto*?'],
+    intro: 'Procura um imóvel, quer desenvolver um terreno ou precisa contratar uma construção? Conte o que está buscando. Se já houver um projeto, informe o uso previsto, a localização e a etapa atual.',
     form: {
       enabled: true,
       channel: 'whatsapp',
-      subjects: ['Empreendimentos', 'Terrenos e parcerias', 'Obras corporativas', 'Imprensa', 'Outros assuntos'],
+      subjects: ['Imóveis e empreendimentos', 'Terrenos e parcerias', 'Construção de condomínios', 'Obras comerciais e industriais', 'Infraestrutura e outros assuntos'],
       labels: {
         name: 'Nome',
         email: 'E-mail',
@@ -326,20 +326,20 @@ export const base: SiteContent = {
   pages: {
     projects: {
       eyebrow: 'Projetos',
-      title: ['Encontre seu', 'próximo *endereço*'],
-      intro: 'Conheça os empreendimentos residenciais e os demais projetos da Halden. Compare áreas, cidades e soluções de arquitetura.',
+      title: ['Obras e', '*empreendimentos*'],
+      intro: 'Condomínios residenciais, casas, edifícios corporativos, hotelaria, indústria e infraestrutura. Consulte o estágio e as características de cada projeto.',
       image: { src: 'demo/campus.jpg', alt: 'Vista aérea de um campus corporativo (imagem demonstrativa)' },
     },
     about: {
       eyebrow: 'Sobre',
-      title: ['Antes do imóvel,', 'a *confiança*'],
+      title: ['Uma empresa,', 'diferentes *frentes*'],
       intro: 'Conheça a trajetória da Halden e as equipes que participam do desenvolvimento e da construção de cada empreendimento.',
       image: { src: 'demo/detail-concrete.jpg', alt: 'Interior em concreto aparente (imagem demonstrativa)' },
     },
     contact: {
       eyebrow: 'Contato',
       title: ['Fale com', 'a *equipe*'],
-      intro: 'Informações sobre imóveis, terrenos e parcerias com a Halden.',
+      intro: 'Atendimento para compra de imóveis, desenvolvimento de terrenos e contratação de construções.',
     },
     notFound: {
       eyebrow: 'Erro 404',
@@ -349,7 +349,7 @@ export const base: SiteContent = {
   },
 
   footer: {
-    statement: ['Conheça seu', 'próximo *endereço*'],
+    statement: ['Vamos falar', 'do seu *projeto*'],
     demoNote: 'Template personalizável · Halden é uma marca fictícia. Use o nome, o logotipo, os contatos e os dados da sua empresa.',
   },
 
