@@ -8,7 +8,7 @@ import type { HeroMode, ProfileId } from './types';
 
 export const site = {
   /** Production URL (used for canonicals, sitemap and Open Graph). No trailing slash. */
-  url: 'https://halden-demo.pages.dev',
+  url: 'https://aruanmf446-hub.github.io/construtoras',
   lang: 'pt-BR',
   locale: 'pt_BR',
 
