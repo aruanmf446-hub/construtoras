@@ -2,7 +2,16 @@
 import { site } from '../config/site.config';
 import type { Project } from '../content/projects';
 
-export const absolute = (path: string) => new URL(path, site.url).toString();
+/** Resolve URLs against the site's deployment subpath (e.g. GitHub Pages). */
+export const absolute = (path: string) => {
+  if (/^https?:\/\//.test(path)) return path;
+  const siteRoot = new URL(site.url.replace(/\/$/, '') + '/');
+  const base = siteRoot.pathname.replace(/\/$/, '');
+  const relative = base && path.startsWith(base + '/')
+    ? path.slice(base.length + 1)
+    : path.replace(/^\/+/, '');
+  return new URL(relative, siteRoot).toString();
+};
 
 export function organizationLd(logoUrl?: string) {
   const c = site.contact;
