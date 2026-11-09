@@ -18,7 +18,7 @@ const year = new Date().getFullYear();
     <div class="footer__grid">
       <div class="footer__brand">
         <Logo />
-        <p class="muted t-small">{site.identity.description}</p>
+        <p class="muted t-small">{content.footer.description}</p>
       </div>
       <nav class="footer__col" aria-label={content.ui.footer}>
         <p class="label subtle">{content.ui.navigation}</p>
@@ -39,7 +39,7 @@ const year = new Date().getFullYear();
       </div>
     </div>
     <div class="footer__base label subtle">
-      <span>© {year} {site.identity.legalName}</span>
+      <span>© {year} {content.footer.legalName}</span>
       {site.demo && <span>{content.footer.demoNote}</span>}
       <ul class="footer__social">
         {site.social.map((s) => <li><a class="link-u" href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>)}

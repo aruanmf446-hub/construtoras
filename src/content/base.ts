@@ -11,11 +11,11 @@ import type { SiteContent } from './schema';
 export const base: SiteContent = {
   hero: {
     eyebrow: 'Nome da sua construtora aqui',
-    title: ['Construção', 'em diferentes *escalas*'],
+    title: ['Construção', 'do início à *entrega*'],
     subtitle:
-      'Condomínios residenciais, edifícios comerciais, hotéis e complexos industriais. Desenvolvimento e construção, do estudo do terreno à entrega.',
-    primary: { label: 'Ver empreendimentos', to: 'projects' },
-    secondary: { label: 'Fale conosco', to: 'contact' },
+      'Construímos condomínios, edifícios comerciais e instalações industriais. Planejamento, gestão de equipes e execução em cada etapa da obra.',
+    primary: { label: 'Conheça nossas obras', to: 'projects' },
+    secondary: { label: 'Solicitar orçamento', to: 'contact' },
     meta: [
       { label: 'Desde', value: '1998' },
       { label: 'Sede', value: 'São Paulo' },
@@ -25,19 +25,19 @@ export const base: SiteContent = {
   },
 
   manifesto: {
-    eyebrow: 'Manifesto',
+    eyebrow: 'Como construímos',
     statement:
-      'Um condomínio precisa conciliar privacidade, circulação e áreas comuns. Uma sede corporativa depende de espaços adequados às equipes. Um complexo logístico exige acessos e instalações para a operação. Cada projeto começa pelo entendimento de quem vai utilizá-lo.',
-    signature: 'Nome do responsável aqui · Construção e Incorporação',
+      'Uma obra exige escopo definido, orçamento e uma sequência de execução. Antes de mobilizar o canteiro, planejamos equipes, materiais e serviços. Durante a construção, acompanhamos o avanço, verificamos as etapas e mantemos o contratante informado até a entrega.',
+    signature: 'Nome do responsável aqui · Responsável técnico',
   },
 
   aboutIntro: {
     eyebrow: 'A empresa',
-    title: ['Da incorporação', 'à *construção*'],
-    lead: 'A Halden desenvolve e constrói empreendimentos residenciais e comerciais, além de executar projetos corporativos, industriais e de infraestrutura.',
+    title: ['Quem executa', 'sua *obra*'],
+    lead: 'A Halden é uma construtora com atuação em condomínios residenciais, edifícios comerciais, instalações industriais e infraestrutura.',
     body: [
-      'O trabalho reúne estudos do terreno, coordenação de projetos e execução. Implantação, acessos, estrutura e instalações são definidos conforme o uso de cada empreendimento.',
-      'Durante a construção, relatórios e visitas técnicas permitem acompanhar as etapas. A entrega inclui orientações de uso e manutenção, com assistência técnica para proprietários e responsáveis pela operação.',
+      'Nossa atuação reúne planejamento, contratação de serviços, compra de materiais e coordenação das equipes no canteiro. O trabalho segue os projetos e o escopo definido com o contratante.',
+      'Relatórios e visitas técnicas permitem acompanhar a execução. Na entrega, proprietários e responsáveis pela operação recebem orientações de uso e manutenção, com atendimento de assistência técnica.',
     ],
     image: { src: 'demo/detail-fins.jpg', alt: 'Detalhe de fachada com brises verticais em bronze (imagem demonstrativa)' },
     imageSecondary: { src: 'demo/detail-concrete.jpg', alt: 'Interior em concreto aparente com luz zenital (imagem demonstrativa)' },
@@ -50,9 +50,9 @@ export const base: SiteContent = {
   },
 
   featuredProjects: {
-    eyebrow: 'Projetos selecionados',
-    title: ['Projetos em', '*destaque*'],
-    intro: 'Condomínios verticais, uma residência e uma sede corporativa: conheça as soluções de implantação, estrutura e uso dos espaços nesta seleção.',
+    eyebrow: 'Obras selecionadas',
+    title: ['Construções em', '*destaque*'],
+    intro: 'Condomínios, residências e edifícios corporativos. Consulte as dimensões, os sistemas construtivos e o estágio de cada empreendimento.',
     slugs: ['torre-halden-norte', 'residencial-brise', 'casa-espelho', 'sede-atlas'],
     cta: { label: 'Todos os projetos', to: 'projects' },
   },
@@ -64,39 +64,39 @@ export const base: SiteContent = {
     allLabel: 'Todos',
   },
 
-  projectSpotlight: { eyebrow: 'Lançamento em destaque', slug: 'torre-halden-norte' },
+  projectSpotlight: { eyebrow: 'Empreendimento em destaque', slug: 'torre-halden-norte' },
 
   services: {
     eyebrow: 'Especialidades',
     title: ['Do planejamento', 'à *entrega*'],
-    intro: 'Do estudo do terreno ao atendimento após a entrega, reunimos as equipes responsáveis por desenvolver e construir cada empreendimento.',
+    intro: 'Organizamos orçamento, cronograma, suprimentos e execução para conduzir a construção conforme o escopo contratado.',
     items: [
       {
-        title: 'Incorporação',
-        description: 'Análise do terreno, definição do empreendimento e aprovações necessárias para viabilizar o projeto.',
-        tags: ['Terrenos', 'Viabilidade', 'Aprovações'],
+        title: 'Planejamento e orçamento',
+        description: 'Levantamento de serviços, custos, etapas e necessidades do canteiro antes do início da execução.',
+        tags: ['Orçamento', 'Cronograma', 'Logística'],
         image: { src: 'demo/campus.jpg', alt: 'Vista aérea de conjunto de edifícios (imagem demonstrativa)' },
       },
       {
         title: 'Construção',
-        description: 'Planejamento das etapas, contratação de fornecedores e acompanhamento dos serviços até a entrega.',
+        description: 'Coordenação das equipes de campo, dos fornecedores e das frentes de serviço, das fundações aos acabamentos.',
         tags: ['Planejamento', 'Qualidade', 'Segurança'],
         image: { src: 'demo/residence-louvers.jpg', alt: 'Edifício residencial com brises de madeira (imagem demonstrativa)' },
       },
       {
         title: 'Engenharia',
-        description: 'Coordenação de estrutura e instalações para conciliar segurança, uso dos ambientes e manutenção.',
+        description: 'Acompanhamento técnico de fundações, estruturas e instalações, com verificação dos serviços executados.',
         tags: ['Estruturas', 'Fundações', 'BIM'],
         image: { src: 'demo/infrastructure.jpg', alt: 'Viaduto em concreto sob névoa (imagem demonstrativa)' },
       },
       {
         title: 'Coordenação de projetos',
-        description: 'Compatibilização de arquitetura, estrutura e instalações para atender ao uso e à operação de cada empreendimento.',
+        description: 'Análise conjunta dos projetos para identificar interferências e orientar os serviços antes da execução.',
         tags: ['Arquitetura', 'Instalações', 'Compatibilização'],
         image: { src: 'demo/detail-interior.jpg', alt: 'Sala com fachada envidraçada e forro de madeira (imagem demonstrativa)' },
       },
       {
-        title: 'Pós-obra',
+        title: 'Entrega e assistência técnica',
         description: 'Assistência técnica, manuais do proprietário e acompanhamento da operação predial.',
         tags: ['Assistência', 'Manutenção'],
         image: { src: 'demo/corporate.jpg', alt: 'Sede corporativa com fachada em grelha de concreto (imagem demonstrativa)' },
@@ -123,19 +123,19 @@ export const base: SiteContent = {
       {
         kicker: '1998 — 2006',
         title: 'Fundação e primeiras obras',
-        text: 'A empresa inicia suas atividades como escritório de engenharia dedicado a residências unifamiliares. Projeto e acompanhamento de campo formam a base da operação.',
+        text: 'A empresa inicia suas atividades na execução de construções residenciais. As primeiras equipes se dedicam aos serviços de campo e ao acompanhamento técnico das etapas.',
         image: { src: 'demo/pavilion.jpg', alt: 'Residência com volume em balanço sobre espelho d’água (imagem demonstrativa)' },
       },
       {
         kicker: '2007 — 2015',
         title: 'Verticalização',
-        text: 'Os primeiros edifícios residenciais consolidam um método próprio de projeto integrado, unindo incorporação, arquitetura e construção.',
+        text: 'A construtora passa a executar condomínios verticais e amplia a coordenação de fornecedores. Fundações, estruturas, instalações e acabamentos integram o planejamento dos contratos.',
         image: { src: 'demo/residence-louvers.jpg', alt: 'Edifício residencial com varandas e brises (imagem demonstrativa)' },
       },
       {
         kicker: '2016 — 2025',
         title: 'Escala e tecnologia',
-        text: 'A adoção de BIM e planejamento 4D acompanha a expansão para torres e edifícios corporativos. Modelos digitais passam a apoiar a coordenação das equipes.',
+        text: 'A execução de edifícios corporativos acompanha a ampliação da equipe técnica. Modelos digitais apoiam o levantamento de materiais e o planejamento das frentes de serviço.',
         image: { src: 'demo/hero-tower.jpg', alt: 'Torre residencial ao entardecer (imagem demonstrativa)' },
       },
     ],
@@ -145,8 +145,8 @@ export const base: SiteContent = {
     eyebrow: 'Linha do tempo',
     title: ['Etapas da', 'nossa *história*'],
     items: [
-      { year: '1998', title: 'Fundação', text: 'Início das atividades como escritório de engenharia.' },
-      { year: '2003', title: 'Primeira incorporação', text: 'Lançamento do primeiro empreendimento próprio.' },
+      { year: '1998', title: 'Fundação', text: 'Início das atividades de construção e acompanhamento técnico.' },
+      { year: '2003', title: 'Novos contratos', text: 'Ampliação das equipes para a construção de edifícios residenciais.' },
       { year: '2009', title: 'Primeira torre', text: 'Entrega do primeiro edifício acima de 20 pavimentos.' },
       { year: '2014', title: 'Método integrado', text: 'Implantação de BIM em 100% dos projetos.' },
       { year: '2019', title: 'Novas praças', text: 'Abertura de escritórios regionais.' },
@@ -157,7 +157,7 @@ export const base: SiteContent = {
   technology: {
     eyebrow: 'Tecnologia & inovação',
     title: ['Planejar', 'para *executar*'],
-    intro: 'Antes de construir, reunimos arquitetura, estrutura e instalações em modelos digitais. Isso permite identificar conflitos entre os projetos e planejar materiais, custos e etapas de execução.',
+    intro: 'Modelos digitais apoiam o levantamento de materiais e a análise dos projetos antes da execução. No canteiro, o planejamento orienta a sequência dos serviços e o acompanhamento dos custos.',
     image: { src: 'demo/detail-fins.jpg', alt: 'Detalhe de brises metálicos (imagem demonstrativa)' },
     items: [
       { code: 'BIM·LOD 400', title: 'Modelagem integrada', text: 'Estrutura, tubulações e arquitetura são verificadas em conjunto antes de chegar ao canteiro.' },
@@ -170,7 +170,7 @@ export const base: SiteContent = {
   sustainability: {
     eyebrow: 'Sustentabilidade',
     title: ['Construir', 'com *responsabilidade*'],
-    intro: 'Proteção contra o sol, ventilação e uso da água entram no projeto desde o início. São escolhas que influenciam o conforto dos ambientes e o consumo durante o uso do edifício.',
+    intro: 'Na construção, o cuidado ambiental envolve uso de água, controle de materiais e destinação de resíduos. A execução também incorpora os sistemas de proteção solar e reúso previstos nos projetos.',
     image: { src: 'demo/residence-louvers.jpg', alt: 'Fachada com brises de madeira para controle solar (imagem demonstrativa)' },
     figures: [
       { value: '−32%', label: 'consumo de energia*' },
@@ -187,13 +187,13 @@ export const base: SiteContent = {
 
   differentiators: {
     eyebrow: 'Diferenciais construtivos',
-    title: ['O que faz', '*diferença*'],
+    title: ['Gestão em', 'cada *etapa*'],
     items: [
-      { title: 'Implantação e acessos', text: 'Entradas, circulação e ocupação do terreno são estudadas conforme o uso: residencial, comercial ou industrial.' },
-      { title: 'Áreas comuns e coletivas', text: 'Nos condomínios, jardins e espaços de convivência integram o conjunto. Nos edifícios corporativos, acessos e áreas compartilhadas organizam o uso pelas equipes.' },
-      { title: 'Materiais e manutenção', text: 'A escolha de acabamentos considera o desgaste do uso e os cuidados necessários ao longo do tempo.' },
-      { title: 'Espaços conforme o uso', text: 'Apartamentos, ambientes de trabalho e áreas operacionais têm exigências próprias. A distribuição dos espaços considera circulação, atividades e instalações.' },
-      { title: 'Conforto acústico', text: 'A especificação de lajes e esquadrias considera os ruídos entre ambientes e os sons que vêm da rua.' },
+      { title: 'Escopo e orçamento', text: 'Serviços, quantidades e custos são organizados para definir o que será executado e acompanhar as decisões do contrato.' },
+      { title: 'Cronograma e equipes', text: 'A sequência dos serviços considera a disponibilidade de equipes, os acessos ao canteiro e a chegada dos materiais.' },
+      { title: 'Compras e fornecedores', text: 'A contratação de serviços e a compra de materiais acompanham as especificações e as necessidades de cada frente de trabalho.' },
+      { title: 'Controle da execução', text: 'Inspeções e registros de campo verificam os serviços antes da liberação das etapas seguintes.' },
+      { title: 'Segurança no canteiro', text: 'A organização das frentes de serviço inclui orientação das equipes e cuidados com circulação, equipamentos e atividades simultâneas.' },
       { title: 'Acompanhamento da construção', text: 'Relatórios e visitas técnicas programadas permitem ao cliente acompanhar os serviços e as próximas etapas da execução.' },
     ],
   },
@@ -228,9 +228,9 @@ export const base: SiteContent = {
   },
 
   gallery: {
-    projectTitle: ['Detalhes', 'e *materiais*'],
+    projectTitle: ['Construção', 'em *detalhe*'],
     eyebrow: 'Galeria',
-    title: ['Veja mais', 'de *perto*'],
+    title: ['Estruturas', 'e *acabamentos*'],
     images: [
       { src: 'demo/detail-concrete.jpg', alt: 'Hall em concreto aparente com escada e luz zenital (imagem demonstrativa)', caption: 'Hall · concreto aparente' },
       { src: 'demo/pavilion.jpg', alt: 'Residência em balanço sobre espelho d’água ao pôr do sol (imagem demonstrativa)', caption: 'Residência · concreto e vidro' },
@@ -244,7 +244,7 @@ export const base: SiteContent = {
   experience3d: {
     eyebrow: 'Experiência 3D',
     title: ['Explore', 'a *torre*'],
-    intro: 'Veja a organização dos 42 pavimentos da torre demonstrativa. Gire o modelo, aproxime a fachada e selecione as faixas para conhecer os tipos de apartamento.',
+    intro: 'Explore a torre demonstrativa de 42 pavimentos. Gire o modelo e use o controle de camadas para visualizar a composição do edifício; as faixas indicam os usos dos pavimentos.',
     note: 'Arraste para girar · use a rolagem ou o gesto de pinça para aproximar · torre demonstrativa',
     fallbackAlt: 'Torre residencial com brises verticais (imagem demonstrativa)',
     totalFloors: 42,
@@ -271,7 +271,7 @@ export const base: SiteContent = {
     title: ['Clientes', 'e *parceiros*'],
     items: [
       {
-        quote: 'Depoimento ilustrativo. Em uma compra, informações claras sobre a planta, o andamento da construção e a entrega ajudam o cliente a avaliar sua escolha.',
+        quote: 'Depoimento ilustrativo. Este espaço pode apresentar a avaliação de um cliente sobre o acompanhamento da construção e a entrega do empreendimento.',
         author: 'Nome do cliente aqui',
         role: 'Cliente · Nome do empreendimento aqui',
       },
@@ -281,7 +281,7 @@ export const base: SiteContent = {
         role: 'Cargo · Nome da empresa aqui',
       },
       {
-        quote: 'Depoimento ilustrativo. Na parceria de projeto, a avaliação envolve decisões bem documentadas e coordenação entre arquitetura e engenharia.',
+        quote: 'Depoimento ilustrativo. Este espaço pode apresentar a avaliação de um parceiro sobre a coordenação das equipes e dos serviços no canteiro.',
         author: 'Nome do parceiro aqui',
         role: 'Nome do escritório aqui',
       },
@@ -306,11 +306,11 @@ export const base: SiteContent = {
   contact: {
     eyebrow: 'Contato',
     title: ['Qual é o seu', 'próximo *projeto*?'],
-    intro: 'Procura um imóvel, quer desenvolver um terreno ou precisa contratar uma construção? Conte o que está buscando. Se já houver um projeto, informe o uso previsto, a localização e a etapa atual.',
+    intro: 'Precisa construir um condomínio, um edifício comercial ou uma instalação industrial? Conte onde será a obra e em que etapa estão os projetos. Essas informações ajudam a iniciar a análise de escopo e orçamento.',
     form: {
       enabled: true,
       channel: 'whatsapp',
-      subjects: ['Imóveis e empreendimentos', 'Terrenos e parcerias', 'Construção de condomínios', 'Obras comerciais e industriais', 'Infraestrutura e outros assuntos'],
+      subjects: ['Construção de condomínios', 'Obras comerciais', 'Obras industriais e infraestrutura', 'Terrenos e incorporação', 'Assistência técnica e outros assuntos'],
       labels: {
         name: 'Nome',
         email: 'E-mail',
@@ -327,19 +327,19 @@ export const base: SiteContent = {
     projects: {
       eyebrow: 'Projetos',
       title: ['Obras e', '*empreendimentos*'],
-      intro: 'Condomínios residenciais, casas, edifícios corporativos, hotelaria, indústria e infraestrutura. Consulte o estágio e as características de cada projeto.',
+      intro: 'Condomínios residenciais, edifícios corporativos, hotéis, instalações industriais e infraestrutura. Conheça também as construções residenciais e consulte o estágio de cada empreendimento.',
       image: { src: 'demo/campus.jpg', alt: 'Vista aérea de um campus corporativo (imagem demonstrativa)' },
     },
     about: {
       eyebrow: 'Sobre',
       title: ['Uma empresa,', 'diferentes *frentes*'],
-      intro: 'Conheça a trajetória da Halden e as equipes que participam do desenvolvimento e da construção de cada empreendimento.',
+      intro: 'Conheça a trajetória da construtora, sua atuação e as equipes responsáveis pelo planejamento e pela execução dos contratos.',
       image: { src: 'demo/detail-concrete.jpg', alt: 'Interior em concreto aparente (imagem demonstrativa)' },
     },
     contact: {
       eyebrow: 'Contato',
       title: ['Fale com', 'a *equipe*'],
-      intro: 'Atendimento para compra de imóveis, desenvolvimento de terrenos e contratação de construções.',
+      intro: 'Orçamentos de construção, terrenos e parcerias, além de atendimento de assistência técnica.',
     },
     notFound: {
       eyebrow: 'Erro 404',
@@ -349,7 +349,9 @@ export const base: SiteContent = {
   },
 
   footer: {
-    statement: ['Vamos falar', 'do seu *projeto*'],
+    statement: ['Vamos conversar', 'sobre sua *obra*'],
+    description: 'Construtora com atuação em condomínios, edifícios comerciais, instalações industriais e infraestrutura. Planejamento, execução e assistência técnica.',
+    legalName: 'Halden Construção e Incorporação (empresa fictícia)',
     demoNote: 'Template personalizável · Halden é uma marca fictícia. Use o nome, o logotipo, os contatos e os dados da sua empresa.',
   },
 

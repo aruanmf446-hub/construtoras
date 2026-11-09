@@ -314,6 +314,7 @@ export const engineering: ContentOverrides = {
     "intro": "A gestão ambiental acompanha a execução: uso de água, separação de resíduos e planejamento de materiais. As medidas são definidas conforme o tipo de serviço e as condições do canteiro."
   },
   "footer": {
+    "description": "Construção de infraestrutura viária e instalações industriais, com planejamento de campo, montagem e coordenação das frentes de serviço.",
     "statement": [
       "Vamos planejar",
       "a *execução*"

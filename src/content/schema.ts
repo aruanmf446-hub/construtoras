@@ -133,7 +133,7 @@ export interface SiteContent {
     };
   };
   pages: { projects: PageHeader; about: PageHeader; contact: PageHeader; notFound: PageHeader };
-  footer: { statement: Lines; demoNote: string };
+  footer: { statement: Lines; description: string; legalName: string; demoNote: string };
   ui: {
     mainNavigation: string;
     pages: string;

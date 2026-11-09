@@ -42,7 +42,7 @@ export const projects: Project[] = [
   {
     slug: 'torre-halden-norte',
     name: 'Torre Halden Norte',
-    tagline: 'Condomínio vertical com apartamentos, terraços e coberturas',
+    tagline: 'Condomínio vertical de 42 pavimentos e 84 unidades',
     category: 'Residencial',
     status: 'Lançamento',
     year: '2027',
@@ -54,9 +54,9 @@ export const projects: Project[] = [
     summary:
       'Condomínio residencial de 42 pavimentos em São Paulo, com varandas contínuas protegidas por brises de alumínio em tom bronze.',
     story: [
-      { title: 'Conceito', text: 'Varandas contínuas de 3 metros criam espaço para estar e receber ao ar livre. Brises verticais de alumínio em tom bronze filtram o sol da tarde.' },
-      { title: 'Implantação', text: 'Os jardins do condomínio ocupam 60% do terreno. Uma praça faz a transição entre a rua e o hall de entrada com pé-direito duplo.' },
-      { title: 'Interiores', text: 'Os apartamentos tipo têm plantas de 180 a 240 m², com três ou quatro suítes. A posição dos pilares nas bordas da planta permite diferentes arranjos dos ambientes internos.' },
+      { title: 'Fachadas e varandas', text: 'O projeto prevê varandas contínuas de 3 metros e brises verticais de alumínio em tom bronze. Esses elementos integram a execução das lajes e o fechamento das fachadas.' },
+      { title: 'Térreo e áreas comuns', text: 'Os jardins previstos ocupam 60% do terreno do condomínio. O escopo inclui os acessos, o hall com pé-direito duplo e a piscina de raia de 25 metros.' },
+      { title: 'Estrutura e unidades', text: 'Os apartamentos tipo têm plantas de 180 a 240 m², com três ou quatro suítes. A posição dos pilares nas bordas da planta permite diferentes arranjos dos ambientes internos.' },
     ],
     specs: [
       { label: 'Pavimentos', value: '42' },
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     coverAlt: 'Edifício residencial de nove pavimentos com brises de madeira (imagem demonstrativa)',
     summary: 'Condomínio residencial de 36 apartamentos em Curitiba, com nove pavimentos e painéis deslizantes de madeira para regular luz e privacidade.',
     story: [
-      { title: 'Envoltória ativa', text: 'Os painéis de madeira deslizam diante das aberturas. Cada morador pode ajustar o sombreamento e a privacidade dos ambientes.' },
+      { title: 'Montagem da fachada', text: 'Os painéis de madeira deslizam diante das aberturas. Cada morador pode ajustar o sombreamento e a privacidade dos ambientes.' },
       { title: 'Lajes deslocadas', text: 'As lajes alternam sua posição entre os pavimentos. Esse deslocamento cria varandas sombreadas e marca as linhas horizontais da fachada.' },
     ],
     specs: [
@@ -114,7 +114,7 @@ export const projects: Project[] = [
   {
     slug: 'casa-espelho',
     name: 'Casa Espelho',
-    tagline: 'Um volume suspenso sobre a água',
+    tagline: 'Construção residencial com balanço estrutural de 14 metros',
     category: 'Residencial',
     status: 'Entregue',
     year: '2023',
@@ -142,7 +142,7 @@ export const projects: Project[] = [
   {
     slug: 'sede-atlas',
     name: 'Sede Atlas',
-    tagline: 'Grelha de concreto para um campus corporativo',
+    tagline: 'Edifício corporativo com fachada de concreto pré-fabricado',
     category: 'Corporativo',
     status: 'Entregue',
     year: '2022',
@@ -195,7 +195,7 @@ export const projects: Project[] = [
   {
     slug: 'campus-orion',
     name: 'Campus Orion',
-    tagline: 'Nove pavilhões entre jardins',
+    tagline: 'Conjunto corporativo com nove pavilhões e 62.000 m²',
     category: 'Corporativo',
     status: 'Entregue',
     year: '2020',
